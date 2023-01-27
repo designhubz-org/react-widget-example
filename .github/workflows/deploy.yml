@@ -30,7 +30,7 @@ jobs:
           npm run build
           aws s3 sync build/ s3://designhubz-widget-new-deployment/react-widget-example --acl public-read
 
-          - name: Invalidate Cloudfront distribution
-          run: aws cloudfront create-invalidation --distribution-id E186U475VBQBQ4 --paths "/*"
+      - name: Invalidate Cloudfront distribution
+        run: aws cloudfront create-invalidation --distribution-id E186U475VBQBQ4 --paths "/*"
 
 
