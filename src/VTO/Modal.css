@@ -1,4 +1,4 @@
-.modal {
+.vto-modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -7,7 +7,7 @@
     background: rgba(0, 0, 0, 0.6);
 }
 
-.modal-main {
+.vto-modal-main {
     position:fixed;
     background: white;
     width: 600px;
@@ -28,17 +28,13 @@
     display: none;
 }
 
-.closeBtn {
+.vto-modal-closeBtn {
     cursor: pointer;
     font-weight: 500;
-    padding: 4px 8px;
-    border-radius: 8px;
     border: none;
-    font-size: 18px;
     color: #2c3e50;
-    background: white;
+    background: transparent;
     transition: all 0.25s ease;
-    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.06);
     position: absolute;
     right: 0;
     top: 0;

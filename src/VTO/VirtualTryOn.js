@@ -4,9 +4,9 @@ import './VirtualTryOn.css';
 
 const VirtualTryOn = (props) => {
     return (
-        <widget>
+        <div className="widget">
             Widget Content
-        </widget>
+        </div>
     )
 
 }

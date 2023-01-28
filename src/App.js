@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import productImage from "./assets/img/sample-product-image.jpg";
 import "./assets/css/App.css";
-import { TryOnIcon } from "./assets/icons";
+import { TryOnIcon, CloseIcon } from "./assets/icons";
 import Modal from "./VTO/Modal.js";
 import VirtualTryOn from "./VTO/VirtualTryOn";
 
@@ -24,7 +24,7 @@ const App = () => {
           Try On
         </div>
       </div>
-      <Modal show={VTOActivated} handleClose={hideModal}>
+      <Modal show={VTOActivated} handleClose={hideModal} closeIcon={CloseIcon}>
         <VirtualTryOn />
       </Modal>
     </div>
