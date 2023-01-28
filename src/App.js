@@ -10,7 +10,6 @@ const App = () => {
   const showModal = () => {
     setVTOActivated(true);
   };
-
   const hideModal = () => {
     setVTOActivated(false);
   };

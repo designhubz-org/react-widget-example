@@ -1,5 +1,6 @@
 //import * as Designhubz from 'designhubz-widget'
 import React from 'react'
+import PropTypes from 'prop-types';
 import './VirtualTryOn.css';
 
 const VirtualTryOn = (props) => {
@@ -12,3 +13,5 @@ const VirtualTryOn = (props) => {
 }
 
 export default VirtualTryOn
+
+//add prop Types

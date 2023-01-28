@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import './Modal.css';
 const Modal = ({ handleClose, show, children, closeIcon}) => {
     const showHideClassName = show ? "vto-modal display-block" : "vto-modal display-none";
@@ -14,4 +15,14 @@ const Modal = ({ handleClose, show, children, closeIcon}) => {
     );
 };
 
+
+Modal.propTypes = {
+    handleClose: PropTypes.func.isRequired,
+    show: PropTypes.bool.isRequired,
+    children: PropTypes.any.isRequired,
+    closeIcon: PropTypes.func.isRequired
+}
+
 export default Modal
+
+
