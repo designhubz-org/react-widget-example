@@ -4,15 +4,27 @@ import "./assets/css/App.css";
 import { TryOnIcon, CloseIcon } from "./assets/icons";
 import Modal from "./VTO/Modal.js";
 import VirtualTryOn from "./VTO/VirtualTryOn";
+import {currentProduct,variationData} from "./mockData";
 
 const App = () => {
   const [VTOActivated, setVTOActivated] = useState(false);
+  const baseURL = "https://d14q52nrvkfszh.cloudfront.net/";
+  const checkoutCartURL = `${baseURL}checkout/cart`;
+  const VTOIcons = {
+      switchIcon : '',
+      takeSnapShotIcon:''
+  }
+
   const showModal = () => {
     setVTOActivated(true);
   };
   const hideModal = () => {
     setVTOActivated(false);
   };
+  const fetchVariationData  = (variationCodes) => {
+    // Current Eyewa: POST https://bff.eyewa.com/v1/catalog/ae-en/productList - Requires Bearer Token
+    return variationData;
+  }
 
   return (
     <div className="App">
@@ -24,7 +36,7 @@ const App = () => {
         </div>
       </div>
       <Modal show={VTOActivated} handleClose={hideModal} closeIcon={CloseIcon}>
-        <VirtualTryOn />
+        <VirtualTryOn product={currentProduct} checkoutCartURL={checkoutCartURL} icons={VTOIcons} fetchVariationData={fetchVariationData} />
       </Modal>
     </div>
   );
