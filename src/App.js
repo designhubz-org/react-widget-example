@@ -11,7 +11,8 @@ const App = () => {
   const baseURL = "https://d14q52nrvkfszh.cloudfront.net/";
   const checkoutCartURL = `${baseURL}checkout/cart`;
   const VTOIcons = {
-    switchIcon: "",
+    ThreeDSwitchIcon: "",
+    ARSwitchIcon:"",
     takeSnapShotIcon: "",
   };
 
