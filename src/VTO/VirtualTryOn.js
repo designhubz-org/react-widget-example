@@ -1,7 +1,7 @@
-import React from "react";
+import { useEffect } from "react";
 import PropTypes from "prop-types";
 import "./VirtualTryOn.css";
-
+import useVTOWidget from "./useVTOWidget";
 /*
   Expected VTO Sub Components:
   - VTORecommendations
@@ -10,8 +10,24 @@ import "./VirtualTryOn.css";
   - VTOShareSnapshot
 */
 
-const VirtualTryOn = (props) => {
-  return <div className="vto-widget"></div>;
+const VirtualTryOn = ({
+  product,
+  checkoutCartURL,
+  icons,
+  fetchVariationData,
+  addToCart,
+}) => {
+  const { containerRef, vtoCreateWidget, vtoLoadProduct, vtoSwitchView } =
+    useVTOWidget("1234");
+
+  useEffect(() => {
+    vtoCreateWidget().then(() => {
+      vtoLoadProduct(product.variations[product.index].code);
+      vtoSwitchView("tryon");
+    });
+  }, [vtoCreateWidget, vtoLoadProduct, vtoSwitchView, product]);
+
+  return <div className="vto-widget" ref={containerRef}></div>;
 };
 
 VirtualTryOn.propTypes = {

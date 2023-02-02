@@ -1,54 +1,59 @@
-import { useRef, useCallback, useState } from "react";
-import {
-  auth,
-  setDeployment,
-  createEyewearWidget,
-  switchContext,
-  loadProduct,
-  fetchRecommendations,
-} from "designhubz-widget";
+import { useRef, useEffect, useCallback, useState } from "react";
+import { auth, setDeployment, createEyewearWidget } from "designhubz-widget";
 
 const useVTOWidget = (userId) => {
   const widgetRef = useRef(null);
   const containerRef = useRef(null);
 
-  const [recommendedProducts, setRecommendedProducts] = useState([]);
-  const [view, setView] = useState("3d");
-
   const [isError, setIsError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
+  const vtoIsWidgetInitiated = () => {
+    if (!widgetRef.current) {
+      setIsError(true);
+      setErrorMsg("widget is not ready");
+      return false;
+    }
+    return true;
+  };
+
   const vtoCreateWidget = useCallback(async () => {
-    if (widgetRef.current) return;
+    if (widgetRef.current) {
+      setIsError(true);
+      setErrorMsg("widget is already instantiated");
+      return;
+    }
 
     try {
       if (window.location.origin.includes("//localhost:")) {
         auth(23049412);
         setDeployment("production");
       }
-      widgetRef.current = await createEyewearWidget(containerRef.current);
+      const widget = await createEyewearWidget(containerRef.current);
+      widgetRef.current = widget;
       widgetRef.current.setUserId((userId || "test").toString());
       // onUserInfoUpdate();
+      return widget;
     } catch (e) {
       setIsError(true);
       setErrorMsg(e.toString());
     }
   }, [userId]);
 
-  const vtoSwitchView = useCallback(async () => {
+  const vtoSwitchView = useCallback(async (view) => {
+    if (!vtoIsWidgetInitiated) return null;
     try {
-      const nextView = view === "3d" ? "tryon" : "3d";
-      await switchContext();
-      setView(nextView);
+      await widgetRef.current.switchContext(view);
     } catch (e) {
       setIsError(true);
       setErrorMsg(e.toString());
     }
-  }, [view]);
+  }, []);
 
   const vtoLoadProduct = useCallback(async (vtoId) => {
+    if (!vtoIsWidgetInitiated) return null;
     try {
-      await loadProduct(vtoId);
+      return await widgetRef.current.loadProduct(vtoId);
     } catch (e) {
       setIsError(true);
       setErrorMsg(e.toString());
@@ -56,19 +61,29 @@ const useVTOWidget = (userId) => {
   }, []);
 
   const vtoFetchRecommendations = useCallback(async () => {
+    if (!vtoIsWidgetInitiated) return null;
     try {
-      const similarProds = await fetchRecommendations();
-      setRecommendedProducts(similarProds.map((prod) => prod?.productKey));
+      const similarProds = await widgetRef.current.fetchRecommendations();
+      // setRecommendedProducts(similarProds.map((prod) => prod?.productKey));
+      return similarProds;
     } catch (e) {
       setIsError(true);
       setErrorMsg(e.toString());
     }
   }, []);
 
+  useEffect(() => {
+    if (widgetRef.current) {
+      return () => {
+        widgetRef.current.dispose();
+        widgetRef.current = null;
+      };
+    }
+  }, []);
+
   return {
+    widgetRef,
     containerRef,
-    view,
-    recommendedProducts,
     isError,
     errorMsg,
     vtoCreateWidget,
