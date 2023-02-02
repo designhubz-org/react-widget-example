@@ -1,4 +1,3 @@
-//import * as Designhubz from 'designhubz-widget'
 import React from "react";
 import PropTypes from "prop-types";
 import "./VirtualTryOn.css";
@@ -12,7 +11,7 @@ import "./VirtualTryOn.css";
 */
 
 const VirtualTryOn = (props) => {
-  return <div className="widget">Widget</div>;
+  return <div className="vto-widget"></div>;
 };
 
 VirtualTryOn.propTypes = {

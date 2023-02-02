@@ -2,6 +2,7 @@
   "name": "react-widget-example",
   "version": "0.1.0",
   "dependencies": {
+    "designhubz-widget": "https://d2v6wmk4yqo2ys.cloudfront.net/master/designhubz-widget-2.2.0.tgz",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.0",

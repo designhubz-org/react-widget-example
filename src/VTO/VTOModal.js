@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import "./Modal.css";
+import "./VTOModal.css";
 
 const VTOModal = ({ handleClose, show, children, closeIcon }) => {
   const showHideClassName = show
