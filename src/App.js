@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import productImage from "./assets/img/sample-product-image.jpg";
 import "./assets/css/App.css";
 import { TryOnIcon, CloseIcon } from "./assets/icons";
-import Modal from "./VTO/Modal.js";
+import Modal from "./VTO/VTOModal.js";
 import VirtualTryOn from "./VTO/VirtualTryOn";
 import { currentProduct, variationData } from "./mockData";
 
@@ -12,7 +12,7 @@ const App = () => {
   const checkoutCartURL = `${baseURL}checkout/cart`;
   const VTOIcons = {
     ThreeDSwitchIcon: "",
-    ARSwitchIcon:"",
+    ARSwitchIcon: "",
     takeSnapShotIcon: "",
   };
 
