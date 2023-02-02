@@ -10,6 +10,7 @@ const App = () => {
   const [VTOActivated, setVTOActivated] = useState(false);
   const baseURL = "https://d14q52nrvkfszh.cloudfront.net/";
   const checkoutCartURL = `${baseURL}checkout/cart`;
+  const userId="1234";
   const VTOIcons = {
     ThreeDSwitchIcon: "",
     ARSwitchIcon: "",
@@ -42,6 +43,7 @@ const App = () => {
       <Modal show={VTOActivated} handleClose={hideModal} closeIcon={CloseIcon}>
         <VirtualTryOn
           product={currentProduct}
+          userId={userId}
           checkoutCartURL={checkoutCartURL}
           icons={VTOIcons}
           fetchVariationData={fetchVariationData}

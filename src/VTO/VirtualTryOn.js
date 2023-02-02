@@ -16,9 +16,10 @@ const VirtualTryOn = ({
   icons,
   fetchVariationData,
   addToCart,
+  userId
 }) => {
   const { containerRef, vtoCreateWidget, vtoLoadProduct, vtoSwitchView } =
-    useVTOWidget("1234");
+    useVTOWidget(userId);
 
   useEffect(() => {
     vtoCreateWidget().then(() => {
