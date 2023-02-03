@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import "./VirtualTryOn.css";
 import useVTOWidget from "./useVTOWidget";
+import VTORecommendations from "./VTORecommendations";
 /*
   Expected VTO Sub Components:
   - VTORecommendations
@@ -16,19 +17,50 @@ const VirtualTryOn = ({
   icons,
   fetchVariationData,
   addToCart,
-  userId
+  userId,
 }) => {
-  const { containerRef, vtoCreateWidget, vtoLoadProduct, vtoSwitchView } =
-    useVTOWidget(userId);
+  const {
+    containerRef,
+    vtoCreateWidget,
+    vtoLoadProduct,
+    vtoSwitchView,
+    vtoFetchRecommendations,
+  } = useVTOWidget(userId);
+  const [recommendedProducts, setRecommendedProducts] = useState([]);
+  const [variationData, setVariationData] = useState([]);
+
 
   useEffect(() => {
     vtoCreateWidget().then(() => {
       vtoLoadProduct(product.variations[product.index].code);
       vtoSwitchView("tryon");
+      vtoFetchRecommendations().then((result)=> {
+        setRecommendedProducts(result);
+      })
     });
-  }, [vtoCreateWidget, vtoLoadProduct, vtoSwitchView, product]);
+  }, [
+    vtoCreateWidget,
+    vtoLoadProduct,
+    vtoSwitchView,
+    vtoFetchRecommendations,
+    product,
+  ]);
 
-  return <div className="vto-widget" ref={containerRef}></div>;
+  useEffect(() => {
+    if (recommendedProducts.length > 0) {
+      setVariationData(fetchVariationData(recommendedProducts));
+    }
+  }, [recommendedProducts]);
+
+  return (
+    <>
+      <div className="vto-widget" ref={containerRef}></div>
+      <VTORecommendations
+        variationData={variationData}
+        takeSnapshotIcon={icons.takeSnapShotIcon}
+      />
+    </>
+  );
 };
 
 VirtualTryOn.propTypes = {
