@@ -10,6 +10,11 @@ import VTORecommendations from "./VTORecommendations";
   - VTOVariations
   - VTOShareSnapshot
 */
+const WIDGET_STATUS = {
+  INITIATED: 'INITIATED',
+  PRODUCT_LOADED: 'PRODUCT_LOADED',
+  RECOMMENDATIONS_FETCHED: 'RECOMMENDATIONS_FETCHED',
+}
 
 const VirtualTryOn = ({
   product,
@@ -28,6 +33,7 @@ const VirtualTryOn = ({
   } = useVTOWidget(userId);
   const [recommendedProducts, setRecommendedProducts] = useState([]);
   const [variationData, setVariationData] = useState([]);
+  const [tryOnStatus, setTryOnStatus] = useState(null);
 
 
   useEffect(() => {
@@ -54,11 +60,12 @@ const VirtualTryOn = ({
 
   return (
     <>
-      <div className="vto-widget" ref={containerRef}></div>
-      <VTORecommendations
-        variationData={variationData}
-        takeSnapshotIcon={icons.takeSnapShotIcon}
-      />
+      <div className="vto-widget" ref={containerRef}>
+        <VTORecommendations
+            variationData={variationData}
+            takeSnapshotIcon={icons.takeSnapShotIcon}
+        />
+      </div>
     </>
   );
 };
