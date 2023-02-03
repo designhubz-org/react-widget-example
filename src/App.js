@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import productImage from "./assets/img/sample-product-image.jpg";
 import "./assets/css/App.css";
 import { TryOnIcon, CloseIcon } from "./assets/icons";
-import Modal from "./VTO/Modal.js";
+import Modal from "./VTO/VTOModal.js";
 import VirtualTryOn from "./VTO/VirtualTryOn";
 import { currentProduct, variationData } from "./mockData";
 
@@ -10,9 +10,10 @@ const App = () => {
   const [VTOActivated, setVTOActivated] = useState(false);
   const baseURL = "https://d14q52nrvkfszh.cloudfront.net/";
   const checkoutCartURL = `${baseURL}checkout/cart`;
+  const userId="1234";
   const VTOIcons = {
     ThreeDSwitchIcon: "",
-    ARSwitchIcon:"",
+    ARSwitchIcon: "",
     takeSnapShotIcon: "",
   };
 
@@ -42,6 +43,7 @@ const App = () => {
       <Modal show={VTOActivated} handleClose={hideModal} closeIcon={CloseIcon}>
         <VirtualTryOn
           product={currentProduct}
+          userId={userId}
           checkoutCartURL={checkoutCartURL}
           icons={VTOIcons}
           fetchVariationData={fetchVariationData}
