@@ -20,6 +20,7 @@ type TVTOIcons = {
 export interface VirtualTryOnProps
   extends StandardProps<React.HTMLAttributes<HTMLDivElement>> {
   children?: React.ReactNode;
+  userId: string;
   checkoutCartURL: string;
   icons: TVTOIcons;
   fetchVariationData: (codes: string[]) => Array<TVTOVariation>;

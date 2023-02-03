@@ -63,8 +63,9 @@ const useVTOWidget = (userId) => {
   const vtoFetchRecommendations = useCallback(async () => {
     if (!vtoIsWidgetInitiated) return null;
     try {
+      await widgetRef.current.fetchFitInfo()
       const similarProds = await widgetRef.current.fetchRecommendations();
-      // setRecommendedProducts(similarProds.map((prod) => prod?.productKey));
+      //setRecommendedProducts(similarProds.map((prod) => prod?.productKey));
       return similarProds;
     } catch (e) {
       setIsError(true);
