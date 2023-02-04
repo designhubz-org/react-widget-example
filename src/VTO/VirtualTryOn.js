@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import "./VirtualTryOn.css";
 import useVTOWidget from "./useVTOWidget";
 import VTORecommendations from "./VTORecommendations";
+import VTOViewSwitch from "./VTOViewSwitch";
 /*
   Expected VTO Sub Components:
   - VTORecommendations
@@ -11,10 +12,10 @@ import VTORecommendations from "./VTORecommendations";
   - VTOShareSnapshot
 */
 const WIDGET_STATUS = {
-  INITIATED: 'INITIATED',
-  PRODUCT_LOADED: 'PRODUCT_LOADED',
-  RECOMMENDATIONS_FETCHED: 'RECOMMENDATIONS_FETCHED',
-}
+  INITIATED: "INITIATED",
+  PRODUCT_LOADED: "PRODUCT_LOADED",
+  RECOMMENDATIONS_FETCHED: "RECOMMENDATIONS_FETCHED",
+};
 
 const VirtualTryOn = ({
   product,
@@ -34,15 +35,15 @@ const VirtualTryOn = ({
   const [recommendedProducts, setRecommendedProducts] = useState([]);
   const [variationData, setVariationData] = useState([]);
   const [tryOnStatus, setTryOnStatus] = useState(null);
-
+  const [currentView, setCurrentView] = useState("tryon");
 
   useEffect(() => {
     vtoCreateWidget().then(() => {
       vtoLoadProduct(product.variations[product.index].code);
       vtoSwitchView("tryon");
-      vtoFetchRecommendations().then((result)=> {
+      vtoFetchRecommendations().then((result) => {
         setRecommendedProducts(result);
-      })
+      });
     });
   }, [
     vtoCreateWidget,
@@ -58,12 +59,23 @@ const VirtualTryOn = ({
     }
   }, [recommendedProducts]);
 
+  const switchView = (view) => {
+    vtoSwitchView(view);
+    setCurrentView(view);
+  };
+
   return (
     <>
       <div className="vto-widget" ref={containerRef}>
         <VTORecommendations
-            variationData={variationData}
-            takeSnapshotIcon={icons.takeSnapShotIcon}
+          variationData={variationData}
+          takeSnapshotIcon={icons.takeSnapShotIcon}
+        />
+        <VTOViewSwitch
+          switchView={switchView}
+          currentView={currentView}
+          ThreeDSwitchIcon={icons.threeDSwitchIcon}
+          ARSwitchIcon={icons.ARSwitchIcon}
         />
       </div>
     </>

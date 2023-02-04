@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import productImage from "./assets/img/sample-product-image.jpg";
 import "./assets/css/App.css";
-import { TryOnIcon, CloseIcon } from "./assets/icons";
+import { TryOnIcon, CloseIcon, ARIcon, ThreeDIcon } from "./assets/icons";
 import Modal from "./VTO/VTOModal.js";
 import VirtualTryOn from "./VTO/VirtualTryOn";
 import { currentProduct, variationData } from "./mockData";
@@ -12,8 +12,8 @@ const App = () => {
   const checkoutCartURL = `${baseURL}checkout/cart`;
   const userId="1234";
   const VTOIcons = {
-    ThreeDSwitchIcon: "",
-    ARSwitchIcon: "",
+    threeDSwitchIcon: ThreeDIcon,
+    ARSwitchIcon: ARIcon,
     takeSnapShotIcon: "",
   };
 
@@ -40,7 +40,7 @@ const App = () => {
           Try On
         </div>
       </div>
-      <Modal show={VTOActivated} handleClose={hideModal} closeIcon={CloseIcon}>
+      <Modal show={VTOActivated} handleClose={hideModal} CloseIcon={CloseIcon}>
         <VirtualTryOn
           product={currentProduct}
           userId={userId}
