@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import productImage from "./assets/img/sample-product-image.jpg";
 import "./assets/css/App.css";
-import { TryOnIcon, CloseIcon, ARIcon, ThreeDIcon } from "./assets/icons";
+import { TryOnIcon, CloseIcon, ARIcon, ThreeDIcon, TakeSnapshotIcon } from "./assets/icons";
 import Modal from "./VTO/VTOModal.js";
 import VirtualTryOn from "./VTO/VirtualTryOn";
 import { currentProduct, variationData } from "./mockData";
@@ -14,7 +14,7 @@ const App = () => {
   const VTOIcons = {
     threeDSwitchIcon: ThreeDIcon,
     ARSwitchIcon: ARIcon,
-    takeSnapShotIcon: "",
+    takeSnapShotIcon: TakeSnapshotIcon,
   };
 
   const showModal = () => {

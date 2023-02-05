@@ -36,6 +36,7 @@ const VirtualTryOn = ({
   const [variationData, setVariationData] = useState([]);
   const [tryOnStatus, setTryOnStatus] = useState(null);
   const [currentView, setCurrentView] = useState("tryon");
+  const [snapshotPreview, setSnapshotPreview] = useState(false);
 
   useEffect(() => {
     vtoCreateWidget().then(() => {
@@ -63,6 +64,14 @@ const VirtualTryOn = ({
     vtoSwitchView(view);
     setCurrentView(view);
   };
+  const takeSnapshot = () => {
+    //vtoTakeSnapshot();
+    setSnapshotPreview(true);
+    alert("Snapshot Taken");
+  };
+  const loadProduct = (productId) => {
+    vtoLoadProduct(productId);
+  };
 
   return (
     <>
@@ -70,6 +79,8 @@ const VirtualTryOn = ({
         <VTORecommendations
           variationData={variationData}
           takeSnapshotIcon={icons.takeSnapShotIcon}
+          takeSnapshot={takeSnapshot}
+          loadProduct={loadProduct}
         />
         <VTOViewSwitch
           switchView={switchView}
