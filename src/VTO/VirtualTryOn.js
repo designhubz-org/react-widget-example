@@ -10,11 +10,12 @@ import VTORecommendations from "./VTORecommendations";
   - VTOVariations
   - VTOShareSnapshot
 */
-const WIDGET_STATUS = {
-  INITIATED: 'INITIATED',
-  PRODUCT_LOADED: 'PRODUCT_LOADED',
-  RECOMMENDATIONS_FETCHED: 'RECOMMENDATIONS_FETCHED',
-}
+
+// const WIDGET_STATUS = {
+//   INITIATED: "INITIATED",
+//   PRODUCT_LOADED: "PRODUCT_LOADED",
+//   RECOMMENDATIONS_FETCHED: "RECOMMENDATIONS_FETCHED",
+// };
 
 const VirtualTryOn = ({
   product,
@@ -27,43 +28,51 @@ const VirtualTryOn = ({
   const {
     containerRef,
     vtoCreateWidget,
+    vtoSetUserId,
     vtoLoadProduct,
     vtoSwitchView,
     vtoFetchRecommendations,
-  } = useVTOWidget(userId);
-  const [recommendedProducts, setRecommendedProducts] = useState([]);
+  } = useVTOWidget({
+    onUserInfoUpdate: (userInfo) => {
+      console.log("userInfo:", userInfo);
+    },
+    onTrackingStatusChange: (trackingStatus) => {
+      console.log("trackingStatus:", trackingStatus);
+    },
+  });
   const [variationData, setVariationData] = useState([]);
-  const [tryOnStatus, setTryOnStatus] = useState(null);
+  // const [tryOnStatus, setTryOnStatus] = useState(null);
 
+  console.log("render one!");
 
   useEffect(() => {
     vtoCreateWidget().then(() => {
+      vtoSetUserId(userId);
       vtoLoadProduct(product.variations[product.index].code);
       vtoSwitchView("tryon");
-      vtoFetchRecommendations().then((result)=> {
-        setRecommendedProducts(result);
-      })
+      vtoFetchRecommendations().then((result) => {
+        const recommendedProducts = result;
+        const variations = fetchVariationData(recommendedProducts);
+        setVariationData(variations);
+      });
     });
   }, [
+    userId,
     vtoCreateWidget,
+    vtoSetUserId,
     vtoLoadProduct,
     vtoSwitchView,
     vtoFetchRecommendations,
     product,
+    fetchVariationData,
   ]);
-
-  useEffect(() => {
-    if (recommendedProducts.length > 0) {
-      setVariationData(fetchVariationData(recommendedProducts));
-    }
-  }, [recommendedProducts]);
 
   return (
     <>
       <div className="vto-widget" ref={containerRef}>
         <VTORecommendations
-            variationData={variationData}
-            takeSnapshotIcon={icons.takeSnapShotIcon}
+          variationData={variationData}
+          takeSnapshotIcon={icons.takeSnapShotIcon}
         />
       </div>
     </>
