@@ -48,7 +48,7 @@ const VirtualTryOn = ({
     },
   });
   const [variationData, setVariationData] = useState([]);
-  const [tryOnStatus, setTryOnStatus] = useState(null);
+  // const [tryOnStatus, setTryOnStatus] = useState(null);
   const [currentView, setCurrentView] = useState("tryon");
   const [snapshotPreview, setSnapshotPreview] = useState(false);
 

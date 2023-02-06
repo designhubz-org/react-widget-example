@@ -1,4 +1,4 @@
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 
 const VTOViewSwitch = ({
   switchView,
@@ -8,7 +8,7 @@ const VTOViewSwitch = ({
 }) => {
   return (
     <>
-      {currentView == "tryon" ? (
+      {currentView === "tryon" ? (
         <div
           className="vto-switch-view-button vto-3d-switch"
           onClick={() => {
