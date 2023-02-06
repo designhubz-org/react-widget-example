@@ -48,20 +48,18 @@ const VirtualTryOn = ({
     },
   });
   const [variationData, setVariationData] = useState([]);
-  const [tryOnStatus, setTryOnStatus] = useState(null);
+  // const [tryOnStatus, setTryOnStatus] = useState(null);
   const [currentView, setCurrentView] = useState("tryon");
   const [snapshotPreview, setSnapshotPreview] = useState(false);
-
 
   useEffect(() => {
     vtoCreateWidget().then(() => {
       vtoSetUserId(userId);
       vtoLoadProduct(product.variations[product.index].code);
       vtoSwitchView("tryon");
-      vtoFetchRecommendations().then((result) => {
-        setRecommendedProducts(result);
-      });
-
+      // vtoFetchRecommendations().then((result) => {
+      //   setRecommendedProducts(result);
+      // });
     });
   }, [
     userId,
@@ -72,12 +70,11 @@ const VirtualTryOn = ({
     product,
   ]);
 
-
-  useEffect(() => {
-    if (recommendedProducts.length > 0) {
-      setVariationData(fetchVariationData(recommendedProducts));
-    }
-  }, [recommendedProducts]);
+  // useEffect(() => {
+  //   if (recommendedProducts.length > 0) {
+  //     setVariationData(fetchVariationData(recommendedProducts));
+  //   }
+  // }, [recommendedProducts]);
 
   const switchView = (view) => {
     vtoSwitchView(view);
@@ -106,7 +103,6 @@ const VirtualTryOn = ({
           currentView={currentView}
           ThreeDSwitchIcon={icons.threeDSwitchIcon}
           ARSwitchIcon={icons.ARSwitchIcon}
-
         />
       </div>
     </>
