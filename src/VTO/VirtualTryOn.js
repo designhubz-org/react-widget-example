@@ -35,6 +35,12 @@ const VirtualTryOn = ({
   } = useVTOWidget({
     onUserInfoUpdate: (userInfo) => {
       console.log("userInfo:", userInfo);
+      vtoFetchRecommendations(10).then((result) => {
+        console.log("recommendation result:", result);
+        const recommendedProducts = result;
+        const variations = fetchVariationData(recommendedProducts);
+        setVariationData(variations);
+      });
     },
     onTrackingStatusChange: (trackingStatus) => {
       console.log("trackingStatus:", trackingStatus);
@@ -43,18 +49,11 @@ const VirtualTryOn = ({
   const [variationData, setVariationData] = useState([]);
   // const [tryOnStatus, setTryOnStatus] = useState(null);
 
-  console.log("render one!");
-
   useEffect(() => {
     vtoCreateWidget().then(() => {
       vtoSetUserId(userId);
       vtoLoadProduct(product.variations[product.index].code);
       vtoSwitchView("tryon");
-      vtoFetchRecommendations().then((result) => {
-        const recommendedProducts = result;
-        const variations = fetchVariationData(recommendedProducts);
-        setVariationData(variations);
-      });
     });
   }, [
     userId,
@@ -62,9 +61,7 @@ const VirtualTryOn = ({
     vtoSetUserId,
     vtoLoadProduct,
     vtoSwitchView,
-    vtoFetchRecommendations,
     product,
-    fetchVariationData,
   ]);
 
   return (

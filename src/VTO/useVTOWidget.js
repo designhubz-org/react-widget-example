@@ -94,17 +94,22 @@ const useVTOWidget = ({ onUserInfoUpdate, onTrackingStatusChange }) => {
     [vtoIsWidgetInitiated]
   );
 
-  const vtoFetchRecommendations = useCallback(async () => {
-    if (!vtoIsWidgetInitiated()) return null;
-    try {
-      await widgetRef.current.fetchFitInfo();
-      const similarProds = await widgetRef.current.fetchRecommendations();
-      //setRecommendedProducts(similarProds.map((prod) => prod?.productKey));
-      return similarProds;
-    } catch (e) {
-      vtoSetError(e.toString());
-    }
-  }, [vtoIsWidgetInitiated]);
+  const vtoFetchRecommendations = useCallback(
+    async (count) => {
+      if (!vtoIsWidgetInitiated()) return null;
+      try {
+        // await widgetRef.current.fetchFitInfo();
+        const similarProds = await widgetRef.current.fetchRecommendations(
+          count
+        );
+        //setRecommendedProducts(similarProds.map((prod) => prod?.productKey));
+        return similarProds;
+      } catch (e) {
+        vtoSetError(e.toString());
+      }
+    },
+    [vtoIsWidgetInitiated]
+  );
 
   useEffect(() => {
     if (widgetRef.current) {
