@@ -4,6 +4,7 @@ import "./VirtualTryOn.css";
 import useVTOWidget from "./useVTOWidget";
 import VTORecommendations from "./VTORecommendations";
 import VTOViewSwitch from "./VTOViewSwitch";
+import { useVTOProvider } from "./VTOContext";
 /*
   Expected VTO Sub Components:
   - VTORecommendations
@@ -51,15 +52,16 @@ const VirtualTryOn = ({
   // const [tryOnStatus, setTryOnStatus] = useState(null);
   const [currentView, setCurrentView] = useState("tryon");
   const [snapshotPreview, setSnapshotPreview] = useState(false);
+  const { widgetStatus, setWidgetStatus } = useVTOProvider();
+
+  console.log("widgetStatus:", widgetStatus);
 
   useEffect(() => {
     vtoCreateWidget().then(() => {
+      setWidgetStatus("INITIATED");
       vtoSetUserId(userId);
       vtoLoadProduct(product.variations[product.index].code);
       vtoSwitchView("tryon");
-      // vtoFetchRecommendations().then((result) => {
-      //   setRecommendedProducts(result);
-      // });
     });
   }, [
     userId,
@@ -68,13 +70,8 @@ const VirtualTryOn = ({
     vtoLoadProduct,
     vtoSwitchView,
     product,
+    setWidgetStatus,
   ]);
-
-  // useEffect(() => {
-  //   if (recommendedProducts.length > 0) {
-  //     setVariationData(fetchVariationData(recommendedProducts));
-  //   }
-  // }, [recommendedProducts]);
 
   const switchView = (view) => {
     vtoSwitchView(view);

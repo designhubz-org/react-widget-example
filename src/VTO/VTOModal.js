@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { VTOProvider } from "./VTOContext";
 import "./VTOModal.css";
 
 const VTOModal = ({ handleClose, show, children, CloseIcon }) => {
@@ -7,18 +8,20 @@ const VTOModal = ({ handleClose, show, children, CloseIcon }) => {
     : "vto-modal display-none";
 
   return (
-    <div className={showHideClassName}>
-      <section className="vto-modal-main">
-        {children}
-        <button
-          type="button"
-          onClick={handleClose}
-          className="vto-modal-closeBtn"
-        >
-          <CloseIcon />
-        </button>
-      </section>
-    </div>
+    <VTOProvider>
+      <div className={showHideClassName}>
+        <section className="vto-modal-main">
+          {children}
+          <button
+            type="button"
+            onClick={handleClose}
+            className="vto-modal-closeBtn"
+          >
+            <CloseIcon />
+          </button>
+        </section>
+      </div>
+    </VTOProvider>
   );
 };
 
