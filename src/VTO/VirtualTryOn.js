@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import "./VirtualTryOn.css";
 import useVTOWidget from "./useVTOWidget";
 import VTORecommendations from "./VTORecommendations";
+import VTOViewSwitch from "./VTOViewSwitch";
 /*
   Expected VTO Sub Components:
   - VTORecommendations
@@ -47,13 +48,20 @@ const VirtualTryOn = ({
     },
   });
   const [variationData, setVariationData] = useState([]);
-  // const [tryOnStatus, setTryOnStatus] = useState(null);
+  const [tryOnStatus, setTryOnStatus] = useState(null);
+  const [currentView, setCurrentView] = useState("tryon");
+  const [snapshotPreview, setSnapshotPreview] = useState(false);
+
 
   useEffect(() => {
     vtoCreateWidget().then(() => {
       vtoSetUserId(userId);
       vtoLoadProduct(product.variations[product.index].code);
       vtoSwitchView("tryon");
+      vtoFetchRecommendations().then((result) => {
+        setRecommendedProducts(result);
+      });
+
     });
   }, [
     userId,
@@ -64,12 +72,41 @@ const VirtualTryOn = ({
     product,
   ]);
 
+
+  useEffect(() => {
+    if (recommendedProducts.length > 0) {
+      setVariationData(fetchVariationData(recommendedProducts));
+    }
+  }, [recommendedProducts]);
+
+  const switchView = (view) => {
+    vtoSwitchView(view);
+    setCurrentView(view);
+  };
+  const takeSnapshot = () => {
+    //vtoTakeSnapshot();
+    setSnapshotPreview(true);
+    alert("Snapshot Taken");
+  };
+  const loadProduct = (productId) => {
+    vtoLoadProduct(productId);
+  };
+
   return (
     <>
       <div className="vto-widget" ref={containerRef}>
         <VTORecommendations
           variationData={variationData}
           takeSnapshotIcon={icons.takeSnapShotIcon}
+          takeSnapshot={takeSnapshot}
+          loadProduct={loadProduct}
+        />
+        <VTOViewSwitch
+          switchView={switchView}
+          currentView={currentView}
+          ThreeDSwitchIcon={icons.threeDSwitchIcon}
+          ARSwitchIcon={icons.ARSwitchIcon}
+
         />
       </div>
     </>
