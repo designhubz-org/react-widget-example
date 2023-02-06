@@ -1,5 +1,5 @@
-import { useEffect, useCallback, useState } from "react";
-import PropTypes from "prop-types";
+import { useEffect, useCallback } from "react";
+// import PropTypes from "prop-types";
 
 const VTORecommendations = ({
   variationData,
@@ -13,7 +13,7 @@ const VTORecommendations = ({
     return (
       <div
         className={`vto-recommendation-item vto-snapshot ${
-          variationData.length == 0 ? "no-recommendations" : ""
+          variationData.length === 0 ? "no-recommendations" : ""
         }`}
         onMouseUp={() => {
           if (!isDragging) {
@@ -60,7 +60,7 @@ const VTORecommendations = ({
         const dx = e.clientX - pos.x;
         const dy = e.clientY - pos.y;
 
-        if (dx != 0 && dx != null) {
+        if (dx !== 0 && dx !== null) {
           isDragging = true;
         }
         // Scroll the element
