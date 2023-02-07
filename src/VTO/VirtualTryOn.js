@@ -56,14 +56,14 @@ const VirtualTryOn = ({
   const [, setSnapshotPreview] = useState(false);
   const { widgetStatus, setWidgetStatus } = useVTOProvider();
   const [loadingProgress, setLoadingProgress] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingProduct, setIsLoadingProduct] = useState(true);
 
   console.log("widgetStatus:", widgetStatus);
   const loadingHandler = (progress) => {
     console.log("progress:", progress);
     setLoadingProgress(progress);
     if (progress >= 1) {
-      setTimeout(() => setIsLoading(false), 2000);
+      setTimeout(() => setIsLoadingProduct(false), 2000);
     }
   };
 
@@ -97,20 +97,27 @@ const VirtualTryOn = ({
   };
 
   const loadProduct = (productId) => {
-    vtoLoadProduct(productId);
+    // setIsLoading(true);
+    vtoLoadProduct(productId, loadingHandler);
   };
 
   return (
     <>
       <div className="vto-widget-wrapper">
         <div className="vto-widget" ref={containerRef}></div>
-        <VTOPreloader progress={loadingProgress} isLoading={isLoading} />
-        <VTOAddToCart isLoading={isLoading} />
+        <VTOPreloader progress={loadingProgress} isLoading={isLoadingProduct} />
+        <VTOAddToCart
+          product={product}
+          checkoutCartURL={checkoutCartURL}
+          addToCart={addToCart}
+          isLoading={isLoadingProduct}
+        />
         <VTORecommendations
           variationData={variationData}
           takeSnapshotIcon={icons.takeSnapShotIcon}
           takeSnapshot={takeSnapshot}
           loadProduct={loadProduct}
+          isLoading={isLoadingProduct}
         />
         <VTOViewSwitch
           switchView={switchView}

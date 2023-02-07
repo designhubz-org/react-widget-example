@@ -1,10 +1,16 @@
-.vto-add-cart {
+/* .vto-add-cart {
+  position: absolute;
+  right: 20px;
+  bottom: 140px;
+} */
+
+.vto-cart-action {
   position: absolute;
   right: 20px;
   bottom: 140px;
 }
 
-.vto-product-title {
+.vto-product-price {
   font-size: 16px;
   background: rgba(0, 0, 0, 0.34901960784313724);
   color: #fff;
@@ -41,4 +47,32 @@
 
 .vto-btn-add-cart:hover {
   opacity: 0.9;
+}
+
+.vto-msg-wrapper {
+  position: absolute;
+  bottom: -105px;
+  left: 0;
+  width: calc(100% - 40px);
+  background: rgb(223 244 231);
+  border-radius: 15px;
+  padding: 25px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.vto-msg-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.vto-msg-desc {
+  font-size: 13px;
+}
+
+.vto-link a {
+  color: #61b486;
+  font-weight: 700;
 }

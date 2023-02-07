@@ -13,7 +13,7 @@
 }
 
 .display-none {
-  display: none;
+  display: none !important;
 }
 
 .vto-splash-loader {

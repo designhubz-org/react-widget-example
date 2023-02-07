@@ -6,6 +6,7 @@ const VTORecommendations = ({
   takeSnapshotIcon,
   takeSnapshot,
   loadProduct,
+  isLoading,
 }) => {
   const TakeSnapshotIcon = takeSnapshotIcon;
   let isDragging = false;
@@ -14,7 +15,7 @@ const VTORecommendations = ({
       <div
         className={`vto-recommendation-item vto-snapshot ${
           variationData.length === 0 ? "no-recommendations" : ""
-        }`}
+        } ${isLoading ? "display-none" : ""}`}
         onMouseUp={() => {
           if (!isDragging) {
             takeSnapshot();
@@ -24,7 +25,7 @@ const VTORecommendations = ({
         <TakeSnapshotIcon />
       </div>
     );
-  }, [variationData]);
+  }, [variationData, isLoading]);
   useEffect(() => {
     if (variationData.length > 0) {
       let ele = document.querySelector(".vto-recommendation-wrapper");

@@ -12,15 +12,15 @@
   background: white;
   width: 680px;
   max-width: 100%;
-  height: 84vh;
-  top: 50%;
-  /* height: 76vh;
-  top: 43%; */
+  /* height: 84vh;
+  top: 50%; */
+  height: 76vh;
+  top: 43%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10;
   border-radius: 16px;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .display-block {
@@ -28,7 +28,7 @@
 }
 
 .display-none {
-  display: none;
+  display: none !important;
 }
 
 .vto-modal-closeBtn {
