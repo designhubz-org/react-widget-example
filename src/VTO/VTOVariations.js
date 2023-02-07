@@ -7,9 +7,24 @@ const VTOVariations = ({ product, loadProduct, isLoading }) => {
       <div
         className={`vto-variations-wrapper ${isLoading ? "display-none" : ""}`}
       >
-        <ul>
+        <ul className="vto-variations">
           {product.variations.map((variation, index) => {
-            return <li key={index}>{index}</li>;
+            return (
+              <li key={index}>
+                <div
+                  className={`variation-item ${
+                    index === product.index ? "active" : ""
+                  } `}
+                  style={{
+                    backgroundColor: variation.hexColor,
+                    backgroundImage: `url('${variation.textureUrl}')`,
+                  }}
+                  onClick={() => loadProduct(variation.code)}
+                >
+                  {index}
+                </div>
+              </li>
+            );
           })}
         </ul>
       </div>
