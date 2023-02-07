@@ -7,6 +7,7 @@ import VTOViewSwitch from "./VTOViewSwitch";
 import { useVTOProvider } from "./VTOContext";
 import VTOPreloader from "./VTOPreloader";
 import VTOAddToCart from "./VTOAddToCart";
+import VTOVariations from "./VTOVariations";
 /*
   Expected VTO Sub Components:
   - VTORecommendations
@@ -110,6 +111,11 @@ const VirtualTryOn = ({
           product={product}
           checkoutCartURL={checkoutCartURL}
           addToCart={addToCart}
+          isLoading={isLoadingProduct}
+        />
+        <VTOVariations
+          product={product}
+          loadProduct={loadProduct}
           isLoading={isLoadingProduct}
         />
         <VTORecommendations

@@ -1,12 +1,11 @@
 import * as React from "react";
 
-export interface VTOAddToCartProps
+export interface VTOVariationsProps
   extends StandardProps<React.HTMLAttributes<HTMLDivElement>> {
   children?: React.ReactNode;
   product: any;
-  checkoutCartURL: string;
-  addToCart: any;
+  loadProduct: any;
   isLoading: boolean;
 }
 
-export default function VTOAddToCart(props: VTOAddToCartProps): JSX.Element;
+export default function VTOVariations(props: VTOVariationsProps): JSX.Element;

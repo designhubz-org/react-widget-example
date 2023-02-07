@@ -5,7 +5,6 @@ import "./VTOAddToCart.css";
 const VTOAddToCart = ({ product, checkoutCartURL, addToCart, isLoading }) => {
   const [isAddedToCart, setIsAddedToCart] = useState(false);
 
-  console.log("isLoading, isAddedToCart", isLoading, isAddedToCart);
   const addToCartHandler = () => {
     addToCart();
     setIsAddedToCart(true);
