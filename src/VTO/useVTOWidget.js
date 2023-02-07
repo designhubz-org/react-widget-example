@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { auth, setDeployment, createEyewearWidget } from "designhubz-widget";
 import useEventCallback from "./useEventCallback";
 
@@ -14,21 +14,15 @@ const useVTOWidget = ({ onUserInfoUpdate, onTrackingStatusChange }) => {
     setErrorMsg(error);
   };
 
-  const onVTOUserInfoUpdate = useCallback(
-    (userInfo) => {
-      onUserInfoUpdate(userInfo);
-    },
-    [onUserInfoUpdate]
-  );
+  const onVTOUserInfoUpdate = useEventCallback((userInfo) => {
+    onUserInfoUpdate(userInfo);
+  }, []);
 
-  const onVTOTrackingStatusChange = useCallback(
-    (trackingStatus) => {
-      onTrackingStatusChange(trackingStatus);
-    },
-    [onTrackingStatusChange]
-  );
+  const onVTOTrackingStatusChange = useEventCallback((trackingStatus) => {
+    onTrackingStatusChange(trackingStatus);
+  }, []);
 
-  const vtoIsWidgetInitiated = useCallback(() => {
+  const vtoIsWidgetInitiated = useEventCallback(() => {
     if (!widgetRef.current) {
       vtoSetError("widget is not ready");
       return false;
@@ -57,7 +51,7 @@ const useVTOWidget = ({ onUserInfoUpdate, onTrackingStatusChange }) => {
     }
   }, []);
 
-  const vtoSetUserId = useCallback(
+  const vtoSetUserId = useEventCallback(
     async (userId) => {
       if (!vtoIsWidgetInitiated()) return null;
 
@@ -70,46 +64,35 @@ const useVTOWidget = ({ onUserInfoUpdate, onTrackingStatusChange }) => {
     [vtoIsWidgetInitiated]
   );
 
-  const vtoSwitchView = useCallback(
-    async (view) => {
-      if (!vtoIsWidgetInitiated()) return null;
-      try {
-        await widgetRef.current.switchContext(view);
-      } catch (e) {
-        vtoSetError(e.toString());
-      }
-    },
-    [vtoIsWidgetInitiated]
-  );
+  const vtoSwitchView = useEventCallback(async (view) => {
+    if (!vtoIsWidgetInitiated()) return null;
+    try {
+      await widgetRef.current.switchContext(view);
+    } catch (e) {
+      vtoSetError(e.toString());
+    }
+  }, []);
 
-  const vtoLoadProduct = useCallback(
-    async (vtoId) => {
-      if (!vtoIsWidgetInitiated()) return null;
-      try {
-        return await widgetRef.current.loadProduct(vtoId);
-      } catch (e) {
-        vtoSetError(e.toString());
-      }
-    },
-    [vtoIsWidgetInitiated]
-  );
+  const vtoLoadProduct = useEventCallback(async (vtoId) => {
+    if (!vtoIsWidgetInitiated()) return null;
+    try {
+      return await widgetRef.current.loadProduct(vtoId);
+    } catch (e) {
+      vtoSetError(e.toString());
+    }
+  }, []);
 
-  const vtoFetchRecommendations = useCallback(
-    async (count) => {
-      if (!vtoIsWidgetInitiated()) return null;
-      try {
-        // await widgetRef.current.fetchFitInfo();
-        const similarProds = await widgetRef.current.fetchRecommendations(
-          count
-        );
-        //setRecommendedProducts(similarProds.map((prod) => prod?.productKey));
-        return similarProds;
-      } catch (e) {
-        vtoSetError(e.toString());
-      }
-    },
-    [vtoIsWidgetInitiated]
-  );
+  const vtoFetchRecommendations = useEventCallback(async (count) => {
+    if (!vtoIsWidgetInitiated()) return null;
+    try {
+      // await widgetRef.current.fetchFitInfo();
+      const similarProds = await widgetRef.current.fetchRecommendations(count);
+      //setRecommendedProducts(similarProds.map((prod) => prod?.productKey));
+      return similarProds;
+    } catch (e) {
+      vtoSetError(e.toString());
+    }
+  }, []);
 
   useEffect(() => {
     if (widgetRef.current) {
