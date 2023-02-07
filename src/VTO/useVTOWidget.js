@@ -82,6 +82,15 @@ const useVTOWidget = ({ onUserInfoUpdate, onTrackingStatusChange }) => {
     }
   }, []);
 
+  const vtoTakeSnapshot = useEventCallback(async () => {
+    if (!vtoIsWidgetInitiated()) return null;
+    try {
+      return await widgetRef.current.takeSnapshotAsync();
+    } catch (e) {
+      vtoSetError(e.toString());
+    }
+  }, []);
+
   const vtoFetchRecommendations = useEventCallback(async (count) => {
     if (!vtoIsWidgetInitiated()) return null;
     try {
@@ -116,6 +125,7 @@ const useVTOWidget = ({ onUserInfoUpdate, onTrackingStatusChange }) => {
     vtoSetUserId,
     vtoSwitchView,
     vtoLoadProduct,
+    vtoTakeSnapshot,
     vtoFetchRecommendations,
   };
 };

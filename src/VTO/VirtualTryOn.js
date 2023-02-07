@@ -33,6 +33,7 @@ const VirtualTryOn = ({
     vtoSetUserId,
     vtoLoadProduct,
     vtoSwitchView,
+    vtoTakeSnapshot,
     vtoFetchRecommendations,
   } = useVTOWidget({
     onUserInfoUpdate: (userInfo) => {
@@ -51,7 +52,7 @@ const VirtualTryOn = ({
   const [variationData, setVariationData] = useState([]);
   // const [tryOnStatus, setTryOnStatus] = useState(null);
   const [currentView, setCurrentView] = useState("tryon");
-  const [snapshotPreview, setSnapshotPreview] = useState(false);
+  const [, setSnapshotPreview] = useState(false);
   const { widgetStatus, setWidgetStatus } = useVTOProvider();
 
   console.log("widgetStatus:", widgetStatus);
@@ -77,11 +78,14 @@ const VirtualTryOn = ({
     vtoSwitchView(view);
     setCurrentView(view);
   };
+
   const takeSnapshot = () => {
-    //vtoTakeSnapshot();
-    setSnapshotPreview(true);
-    alert("Snapshot Taken");
+    vtoTakeSnapshot().then((snapshot) => {
+      console.log("taken snapshot:", snapshot);
+      setSnapshotPreview(true);
+    });
   };
+
   const loadProduct = (productId) => {
     vtoLoadProduct(productId);
   };
