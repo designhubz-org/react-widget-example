@@ -23,7 +23,8 @@ const VTOPreloader = ({ progress, isLoading }) => {
 };
 
 VTOPreloader.propTypes = {
-  loadingHandler: PropTypes.func.isRequired,
+  progress: PropTypes.number,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 export default VTOPreloader;
