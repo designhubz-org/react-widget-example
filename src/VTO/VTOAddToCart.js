@@ -25,7 +25,7 @@ const VTOAddToCart = ({ product, checkoutCartURL, addToCart, isLoading }) => {
           </div>
         </div>
         <div
-          className={`vto-msg-wrapper ${
+          className={`vto-msg-wrapper animate__animated animate__bounceIn ${
             !isLoading && isAddedToCart ? "" : "display-none"
           }`}
         >
