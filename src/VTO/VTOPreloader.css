@@ -1,0 +1,17 @@
+.vto-loader {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.display-flex {
+  display: flex;
+}
+
+.display-none {
+  display: none;
+}

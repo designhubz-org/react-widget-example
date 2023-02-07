@@ -5,6 +5,7 @@ import useVTOWidget from "./useVTOWidget";
 import VTORecommendations from "./VTORecommendations";
 import VTOViewSwitch from "./VTOViewSwitch";
 import { useVTOProvider } from "./VTOContext";
+import VTOPreloader from "./VTOPreloader";
 /*
   Expected VTO Sub Components:
   - VTORecommendations
@@ -50,18 +51,26 @@ const VirtualTryOn = ({
     },
   });
   const [variationData, setVariationData] = useState([]);
-  // const [tryOnStatus, setTryOnStatus] = useState(null);
   const [currentView, setCurrentView] = useState("tryon");
   const [, setSnapshotPreview] = useState(false);
   const { widgetStatus, setWidgetStatus } = useVTOProvider();
+  const [loadingProgress, setLoadingProgress] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   console.log("widgetStatus:", widgetStatus);
+  const loadingHandler = (progress) => {
+    console.log("progress:", progress);
+    setLoadingProgress(progress);
+    if (progress >= 1) {
+      setTimeout(() => setIsLoading(false), 2000);
+    }
+  };
 
   useEffect(() => {
     vtoCreateWidget().then(() => {
       setWidgetStatus("INITIATED");
       vtoSetUserId(userId);
-      vtoLoadProduct(product.variations[product.index].code);
+      vtoLoadProduct(product.variations[product.index].code, loadingHandler);
       vtoSwitchView("tryon");
     });
   }, [
@@ -93,6 +102,7 @@ const VirtualTryOn = ({
   return (
     <>
       <div className="vto-widget" ref={containerRef}>
+        <VTOPreloader progress={loadingProgress} isLoading={isLoading} />
         <VTORecommendations
           variationData={variationData}
           takeSnapshotIcon={icons.takeSnapShotIcon}

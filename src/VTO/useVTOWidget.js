@@ -73,10 +73,10 @@ const useVTOWidget = ({ onUserInfoUpdate, onTrackingStatusChange }) => {
     }
   }, []);
 
-  const vtoLoadProduct = useEventCallback(async (vtoId) => {
+  const vtoLoadProduct = useEventCallback(async (vtoId, progressHandler) => {
     if (!vtoIsWidgetInitiated()) return null;
     try {
-      return await widgetRef.current.loadProduct(vtoId);
+      return await widgetRef.current.loadProduct(vtoId, progressHandler);
     } catch (e) {
       vtoSetError(e.toString());
     }
