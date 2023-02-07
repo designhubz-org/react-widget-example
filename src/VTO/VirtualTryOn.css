@@ -1,9 +1,25 @@
+.vto-widget-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  position: relative;
+}
+
 .vto-widget {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
+  width: 100%;
+  padding: 4px;
 }
+
+.vto-widget > iframe {
+  min-height: calc(100% - 8px) !important;
+  border-radius: 15px;
+}
+
 .vto-recommendation-wrapper {
   position: absolute;
   display: flex;

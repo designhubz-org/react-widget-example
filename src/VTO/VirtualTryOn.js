@@ -6,6 +6,7 @@ import VTORecommendations from "./VTORecommendations";
 import VTOViewSwitch from "./VTOViewSwitch";
 import { useVTOProvider } from "./VTOContext";
 import VTOPreloader from "./VTOPreloader";
+import VTOAddToCart from "./VTOAddToCart";
 /*
   Expected VTO Sub Components:
   - VTORecommendations
@@ -101,8 +102,10 @@ const VirtualTryOn = ({
 
   return (
     <>
-      <div className="vto-widget" ref={containerRef}>
+      <div className="vto-widget-wrapper">
+        <div className="vto-widget" ref={containerRef}></div>
         <VTOPreloader progress={loadingProgress} isLoading={isLoading} />
+        <VTOAddToCart isLoading={isLoading} />
         <VTORecommendations
           variationData={variationData}
           takeSnapshotIcon={icons.takeSnapShotIcon}
