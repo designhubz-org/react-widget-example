@@ -1,7 +1,15 @@
 import PropTypes from "prop-types";
+import { useVTOProvider } from "./VTOContext";
 import "./VTOVariations.css";
 
 const VTOVariations = ({ product, loadProduct, isLoading }) => {
+  const { currentVariation, setCurrentVariation } = useVTOProvider();
+
+  const variationSelectHandler = (variationId, index) => {
+    loadProduct(variationId);
+    setCurrentVariation(index);
+  };
+
   return (
     <>
       <div
@@ -13,13 +21,13 @@ const VTOVariations = ({ product, loadProduct, isLoading }) => {
               <li key={index}>
                 <div
                   className={`variation-item ${
-                    index === product.index ? "active" : ""
+                    index === currentVariation ? "active" : ""
                   } `}
                   style={{
                     backgroundColor: variation.hexColor,
                     backgroundImage: `url('${variation.textureUrl}')`,
                   }}
-                  onClick={() => loadProduct(variation.code)}
+                  onClick={() => variationSelectHandler(variation.code, index)}
                 >
                   {index}
                 </div>
