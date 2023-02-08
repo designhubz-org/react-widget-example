@@ -96,8 +96,7 @@ const useVTOWidget = ({ onUserInfoUpdate, onTrackingStatusChange }) => {
     try {
       // await widgetRef.current.fetchFitInfo();
       const similarProds = await widgetRef.current.fetchRecommendations(count);
-      //setRecommendedProducts(similarProds.map((prod) => prod?.productKey));
-      return similarProds;
+      return similarProds.map((prod) => prod?.productKey);
     } catch (e) {
       vtoSetError(e.toString());
     }
