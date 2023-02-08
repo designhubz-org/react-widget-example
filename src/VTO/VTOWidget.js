@@ -31,8 +31,9 @@ const VTOWidget = ({
       vtoFetchRecommendations(10).then((result) => {
         console.log("recommendation result:", result);
         const recommendedProducts = result;
-        const variations = fetchVariationData(recommendedProducts);
-        setVariationData(variations);
+        fetchVariationData(recommendedProducts).then((variations) => {
+          setVariationData(variations);
+        })
       });
     },
     onTrackingStatusChange: (trackingStatus) => {
