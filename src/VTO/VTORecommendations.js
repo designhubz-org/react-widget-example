@@ -26,6 +26,22 @@ const VTORecommendations = ({
       </div>
     );
   }, [variationData, isLoading]);
+  const ProductButton = useCallback(({item}) => {
+    return (
+      <div
+        className="vto-recommendation-item"
+        key={item.code}
+        onMouseUp={() => {
+          if (!isDragging) {
+            console.log("loading SKU", item.code);
+            setTimeout(loadProduct(item.code), 200);
+          }
+        }}
+      >
+        <img src={item.thumbnailUrl} />
+      </div>
+    );
+  }, [variationData, isLoading]);
   useEffect(() => {
     if (variationData.length > 0) {
       let ele = document.querySelector(".vto-recommendation-wrapper");
@@ -43,7 +59,7 @@ const VTORecommendations = ({
       const mouseDownHandler = function (e) {
         ele.style.cursor = "grabbing";
         ele.style.userSelect = "none";
-        isDragging = false;
+        if (isDragging) isDragging = false;
         pos = {
           left: ele.scrollLeft,
           top: ele.scrollTop,
@@ -89,18 +105,7 @@ const VTORecommendations = ({
             <>
               {i <= variationData.length / 2 &&
                 i + 1 > variationData.length / 2 && <TakeSnapshotButton />}
-
-              <div
-                className="vto-recommendation-item"
-                key={item.code}
-                onMouseUp={() => {
-                  if (!isDragging) {
-                    loadProduct(item.code);
-                  }
-                }}
-              >
-                <img src={item.thumbnailUrl} />
-              </div>
+                <ProductButton item={item} />
             </>
           );
         })
