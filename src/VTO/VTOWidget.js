@@ -33,7 +33,7 @@ const VTOWidget = ({
         const recommendedProducts = result;
         fetchVariationData(recommendedProducts).then((variations) => {
           setVariationData(variations);
-        })
+        });
       });
     },
     onTrackingStatusChange: (trackingStatus) => {
