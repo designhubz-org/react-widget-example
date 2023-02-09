@@ -2,12 +2,21 @@ import PropTypes from "prop-types";
 import { useVTOProvider } from "./VTOContext";
 import "./VTOVariations.css";
 
-const VTOVariations = ({ product, loadProduct, isLoading }) => {
-  const { currentVariation, setCurrentVariation } = useVTOProvider();
+const VTOVariations = ({ loadProduct, isLoading }) => {
+  // const { currentVariation, setCurrentVariation } = useVTOProvider();
+  const { currentProduct, setCurrentProduct } = useVTOProvider();
+
+  console.log("currentProduct:", currentProduct);
 
   const variationSelectHandler = (variationId, index) => {
     loadProduct(variationId);
-    setCurrentVariation(index);
+    // setCurrentVariation(index);
+    setCurrentProduct((prevState) => {
+      return {
+        ...prevState,
+        index,
+      };
+    });
   };
 
   return (
@@ -16,12 +25,12 @@ const VTOVariations = ({ product, loadProduct, isLoading }) => {
         className={`vto-variations-wrapper ${isLoading ? "display-none" : ""}`}
       >
         <ul className="vto-variations">
-          {product.variations.map((variation, index) => {
+          {currentProduct.variations.map((variation, index) => {
             return (
               <li key={index}>
                 <div
                   className={`variation-item ${
-                    index === currentVariation ? "active" : ""
+                    index === currentProduct.index ? "active" : ""
                   } `}
                   style={{
                     backgroundColor: variation.hexColor,
@@ -41,7 +50,6 @@ const VTOVariations = ({ product, loadProduct, isLoading }) => {
 };
 
 VTOVariations.propTypes = {
-  product: PropTypes.object.isRequired,
   loadProduct: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
 };

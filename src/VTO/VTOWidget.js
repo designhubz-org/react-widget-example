@@ -10,7 +10,6 @@ import VTOAddToCart from "./VTOAddToCart";
 import VTOVariations from "./VTOVariations";
 
 const VTOWidget = ({
-  product,
   checkoutCartURL,
   icons,
   fetchVariationData,
@@ -46,6 +45,7 @@ const VTOWidget = ({
   const { widgetStatus, setWidgetStatus } = useVTOProvider();
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [isLoadingProduct, setIsLoadingProduct] = useState(true);
+  const { currentProduct } = useVTOProvider();
 
   console.log("widgetStatus:", widgetStatus);
   const loadingHandler = (progress) => {
@@ -60,7 +60,10 @@ const VTOWidget = ({
     vtoCreateWidget().then(() => {
       setWidgetStatus("INITIATED");
       vtoSetUserId(userId);
-      vtoLoadProduct(product.variations[product.index].code, loadingHandler);
+      vtoLoadProduct(
+        currentProduct.variations[currentProduct.index].code,
+        loadingHandler
+      );
       vtoSwitchView("tryon");
     });
   }, [
@@ -69,8 +72,8 @@ const VTOWidget = ({
     vtoSetUserId,
     vtoLoadProduct,
     vtoSwitchView,
-    product,
     setWidgetStatus,
+    currentProduct,
   ]);
 
   const switchView = (view) => {
@@ -95,16 +98,11 @@ const VTOWidget = ({
       <div className="vto-widget" ref={containerRef}></div>
       <VTOPreloader progress={loadingProgress} isLoading={isLoadingProduct} />
       <VTOAddToCart
-        product={product}
         checkoutCartURL={checkoutCartURL}
         addToCart={addToCart}
         isLoading={isLoadingProduct}
       />
-      <VTOVariations
-        product={product}
-        loadProduct={loadProduct}
-        isLoading={isLoadingProduct}
-      />
+      <VTOVariations loadProduct={loadProduct} isLoading={isLoadingProduct} />
       <VTORecommendations
         variationData={variationData}
         takeSnapshotIcon={icons.takeSnapShotIcon}

@@ -11,9 +11,8 @@ const VirtualTryOn = ({
   userId,
 }) => {
   return (
-    <VTOProvider initialVariation={product.index}>
+    <VTOProvider initialProduct={product}>
       <VTOWidget
-        product={product}
         checkoutCartURL={checkoutCartURL}
         icons={icons}
         fetchVariationData={fetchVariationData}
