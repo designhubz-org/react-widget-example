@@ -1,4 +1,5 @@
 import { useEffect, useCallback } from "react";
+import { useVTOProvider } from "./VTOContext";
 // import PropTypes from "prop-types";
 
 const VTORecommendations = ({
@@ -8,6 +9,8 @@ const VTORecommendations = ({
   loadProduct,
   isLoading,
 }) => {
+  const { setCurrentProduct } = useVTOProvider();
+
   const TakeSnapshotIcon = takeSnapshotIcon;
   let isDragging = false;
   const TakeSnapshotButton = useCallback(() => {
@@ -26,22 +29,29 @@ const VTORecommendations = ({
       </div>
     );
   }, [variationData, isLoading]);
-  const ProductButton = useCallback(({item}) => {
-    return (
-      <div
-        className="vto-recommendation-item"
-        key={item.code}
-        onMouseUp={() => {
-          if (!isDragging) {
-            console.log("loading SKU", item.code);
-            setTimeout(loadProduct(item.code), 200);
-          }
-        }}
-      >
-        <img src={item.thumbnailUrl} />
-      </div>
-    );
-  }, [variationData, isLoading]);
+  const ProductButton = useCallback(
+    ({ item }) => {
+      return (
+        <div
+          className="vto-recommendation-item"
+          key={item.code}
+          onMouseUp={() => {
+            if (!isDragging) {
+              console.log("loading SKU", item.code);
+              setTimeout(loadProduct(item.code), 200);
+              setCurrentProduct({
+                index: 0,
+                variations: item.variations,
+              });
+            }
+          }}
+        >
+          <img src={item.thumbnailUrl} />
+        </div>
+      );
+    },
+    [variationData, isLoading]
+  );
   useEffect(() => {
     if (variationData.length > 0) {
       let ele = document.querySelector(".vto-recommendation-wrapper");
@@ -105,7 +115,7 @@ const VTORecommendations = ({
             <>
               {i <= variationData.length / 2 &&
                 i + 1 > variationData.length / 2 && <TakeSnapshotButton />}
-                <ProductButton item={item} />
+              <ProductButton item={item} />
             </>
           );
         })

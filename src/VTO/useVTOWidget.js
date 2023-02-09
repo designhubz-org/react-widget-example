@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import { auth, setDeployment, createEyewearWidget } from "designhubz-widget";
 import useEventCallback from "./useEventCallback";
+import { useVTOProvider } from "./VTOContext";
 
 const useVTOWidget = ({ onUserInfoUpdate, onTrackingStatusChange }) => {
   const widgetRef = useRef(null);
@@ -8,6 +9,8 @@ const useVTOWidget = ({ onUserInfoUpdate, onTrackingStatusChange }) => {
 
   const [isError, setIsError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+
+  const { setWidgetStatus } = useVTOProvider();
 
   const vtoSetError = (error) => {
     setIsError(true);
@@ -33,7 +36,7 @@ const useVTOWidget = ({ onUserInfoUpdate, onTrackingStatusChange }) => {
   const vtoCreateWidget = useEventCallback(async () => {
     if (widgetRef.current) {
       vtoSetError("widget is already instantiated");
-      return;
+      return null;
     }
 
     try {
@@ -109,11 +112,12 @@ const useVTOWidget = ({ onUserInfoUpdate, onTrackingStatusChange }) => {
         widgetRef.current.onTrackingStatusChange.Remove(
           onVTOTrackingStatusChange
         );
-        // widgetRef.current.dispose();
+        widgetRef.current.dispose();
         widgetRef.current = null;
+        setWidgetStatus("NOT_READY");
       };
     }
-  }, [onVTOUserInfoUpdate, onVTOTrackingStatusChange]);
+  }, [onVTOUserInfoUpdate, onVTOTrackingStatusChange, setWidgetStatus]);
 
   return {
     widgetRef,

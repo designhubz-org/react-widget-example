@@ -17,15 +17,19 @@ const VTOAddToCart = ({ checkoutCartURL, addToCart, isLoading }) => {
     <>
       <div className={`vto-add-cart ${isLoading ? "display-none" : ""}`}>
         <div className={`vto-cart-action ${isLoading ? "display-none" : ""}`}>
-          <div className="vto-product-price">
-            {currentProduct.variations[currentProduct.index].currency}{" "}
-            {currentProduct.variations[currentProduct.index].price}
-          </div>
-          <div className="vto-action-wrapper">
-            <button className="vto-btn-add-cart" onClick={addToCartHandler}>
-              Add to cart
-            </button>
-          </div>
+          {currentProduct.variations && (
+            <>
+              <div className="vto-product-price">
+                {currentProduct.variations[currentProduct.index].currency}{" "}
+                {currentProduct.variations[currentProduct.index].price}
+              </div>
+              <div className="vto-action-wrapper">
+                <button className="vto-btn-add-cart" onClick={addToCartHandler}>
+                  Add to cart
+                </button>
+              </div>
+            </>
+          )}
         </div>
         <div
           className={`vto-msg-wrapper animate__animated animate__bounceIn ${

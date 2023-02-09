@@ -57,17 +57,20 @@ const VTOWidget = ({
   };
 
   useEffect(() => {
-    vtoCreateWidget().then(() => {
-      setWidgetStatus("INITIATED");
-      vtoSetUserId(userId);
-      vtoLoadProduct(
-        currentProduct.variations[currentProduct.index].code,
-        loadingHandler
-      );
-      vtoSwitchView("tryon");
-    });
+    if (widgetStatus === "NOT_READY") {
+      vtoCreateWidget().then(() => {
+        setWidgetStatus("INITIATED");
+        vtoSetUserId(userId);
+        vtoLoadProduct(
+          currentProduct.variations[currentProduct.index].code,
+          loadingHandler
+        );
+        vtoSwitchView("tryon");
+      });
+    }
   }, [
     userId,
+    widgetStatus,
     vtoCreateWidget,
     vtoSetUserId,
     vtoLoadProduct,
