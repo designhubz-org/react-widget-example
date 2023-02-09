@@ -16,6 +16,7 @@ const VTOWidget = ({
   addToCart,
   userId,
 }) => {
+  const { currentProduct, setTrackingStatus } = useVTOProvider();
   const {
     containerRef,
     vtoCreateWidget,
@@ -37,6 +38,7 @@ const VTOWidget = ({
     },
     onTrackingStatusChange: (trackingStatus) => {
       console.log("trackingStatus:", trackingStatus);
+      setTrackingStatus(trackingStatus);
     },
   });
   const [variationData, setVariationData] = useState([]);
@@ -45,7 +47,6 @@ const VTOWidget = ({
   const { widgetStatus, setWidgetStatus } = useVTOProvider();
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [isLoadingProduct, setIsLoadingProduct] = useState(true);
-  const { currentProduct } = useVTOProvider();
 
   console.log("widgetStatus:", widgetStatus);
   const loadingHandler = (progress) => {
