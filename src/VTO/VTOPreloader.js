@@ -2,10 +2,10 @@ import PropTypes from "prop-types";
 import { VTOEywaIcon } from "./VTOEywaIcon";
 import "./VTOPreloader.css";
 
-const VTOPreloader = ({ progress, isLoading }) => {
+const VTOPreloader = ({ progress }) => {
   return (
     <>
-      <div className={`vto-loader ${isLoading ? "" : "display-none"}`}>
+      <div className={"vto-loader"}>
         <div className="vto-splash-loader">
           <div>
             <VTOEywaIcon className={""} />
@@ -24,7 +24,6 @@ const VTOPreloader = ({ progress, isLoading }) => {
 
 VTOPreloader.propTypes = {
   progress: PropTypes.number,
-  isLoading: PropTypes.bool.isRequired,
 };
 
 export default VTOPreloader;

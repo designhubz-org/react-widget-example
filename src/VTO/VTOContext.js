@@ -8,6 +8,8 @@ export const VTOProvider = ({ children, initialProduct }) => {
   const [currentProduct, setCurrentProduct] = useState(initialProduct);
   const [currentView, setCurrentView] = useState("3d");
   const [trackingStatus, setTrackingStatus] = useState("Idle");
+  const [snapshotData, setSnapshotData] = useState(null);
+  const [snapshotPreview, setSnapshotPreview] = useState(false);
 
   return (
     <VTOContext.Provider
@@ -20,6 +22,10 @@ export const VTOProvider = ({ children, initialProduct }) => {
         setTrackingStatus,
         currentProduct,
         setCurrentProduct,
+        snapshotData,
+        setSnapshotData,
+        snapshotPreview,
+        setSnapshotPreview,
       }}
     >
       {children}

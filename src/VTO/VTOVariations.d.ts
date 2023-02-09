@@ -5,7 +5,6 @@ export interface VTOVariationsProps
   children?: React.ReactNode;
   product: any;
   loadProduct: any;
-  isLoading: boolean;
 }
 
 export default function VTOVariations(props: VTOVariationsProps): JSX.Element;

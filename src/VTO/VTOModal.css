@@ -44,4 +44,5 @@
   align-self: flex-end;
   margin-top: 10px;
   margin-right: 6px;
+  z-index: 100;
 }

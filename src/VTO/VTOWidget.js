@@ -8,6 +8,7 @@ import { useVTOProvider } from "./VTOContext";
 import VTOPreloader from "./VTOPreloader";
 import VTOAddToCart from "./VTOAddToCart";
 import VTOVariations from "./VTOVariations";
+import VTOSnapshotPreview from "./VTOSnapshotPreview";
 
 const VTOWidget = ({
   checkoutCartURL,
@@ -16,7 +17,13 @@ const VTOWidget = ({
   addToCart,
   userId,
 }) => {
-  const { currentProduct, setTrackingStatus } = useVTOProvider();
+  const {
+    currentProduct,
+    setTrackingStatus,
+    setSnapshotData,
+    snapshotPreview,
+    setSnapshotPreview,
+  } = useVTOProvider();
   const {
     containerRef,
     vtoCreateWidget,
@@ -43,7 +50,6 @@ const VTOWidget = ({
   });
   const [variationData, setVariationData] = useState([]);
   const [currentView, setCurrentView] = useState("tryon");
-  const [, setSnapshotPreview] = useState(false);
   const { widgetStatus, setWidgetStatus } = useVTOProvider();
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [isLoadingProduct, setIsLoadingProduct] = useState(true);
@@ -88,6 +94,9 @@ const VTOWidget = ({
   const takeSnapshot = () => {
     vtoTakeSnapshot().then((snapshot) => {
       console.log("taken snapshot:", snapshot);
+      const imgData = snapshot.getDataURL();
+      console.log("imgData:", imgData);
+      setSnapshotData(imgData);
       setSnapshotPreview(true);
     });
   };
@@ -100,26 +109,29 @@ const VTOWidget = ({
   return (
     <div className="vto-widget-wrapper">
       <div className="vto-widget" ref={containerRef}></div>
-      <VTOPreloader progress={loadingProgress} isLoading={isLoadingProduct} />
-      <VTOAddToCart
-        checkoutCartURL={checkoutCartURL}
-        addToCart={addToCart}
-        isLoading={isLoadingProduct}
-      />
-      <VTOVariations loadProduct={loadProduct} isLoading={isLoadingProduct} />
-      <VTORecommendations
-        variationData={variationData}
-        takeSnapshotIcon={icons.takeSnapShotIcon}
-        takeSnapshot={takeSnapshot}
-        loadProduct={loadProduct}
-        isLoading={isLoadingProduct}
-      />
-      <VTOViewSwitch
-        switchView={switchView}
-        currentView={currentView}
-        ThreeDSwitchIcon={icons.threeDSwitchIcon}
-        ARSwitchIcon={icons.ARSwitchIcon}
-      />
+      {isLoadingProduct && <VTOPreloader progress={loadingProgress} />}
+      {!isLoadingProduct && (
+        <>
+          <VTOAddToCart
+            checkoutCartURL={checkoutCartURL}
+            addToCart={addToCart}
+          />
+          <VTOVariations loadProduct={loadProduct} />
+          <VTORecommendations
+            variationData={variationData}
+            takeSnapshotIcon={icons.takeSnapShotIcon}
+            takeSnapshot={takeSnapshot}
+            loadProduct={loadProduct}
+          />
+          <VTOViewSwitch
+            switchView={switchView}
+            currentView={currentView}
+            ThreeDSwitchIcon={icons.threeDSwitchIcon}
+            ARSwitchIcon={icons.ARSwitchIcon}
+          />
+        </>
+      )}
+      {!isLoadingProduct && snapshotPreview && <VTOSnapshotPreview />}
     </div>
   );
 };

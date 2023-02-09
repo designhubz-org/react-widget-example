@@ -3,7 +3,7 @@ import { useState } from "react";
 import "./VTOAddToCart.css";
 import { useVTOProvider } from "./VTOContext";
 
-const VTOAddToCart = ({ checkoutCartURL, addToCart, isLoading }) => {
+const VTOAddToCart = ({ checkoutCartURL, addToCart }) => {
   const [isAddedToCart, setIsAddedToCart] = useState(false);
   // const { currentVariation } = useVTOProvider();
   const { currentProduct } = useVTOProvider();
@@ -15,8 +15,8 @@ const VTOAddToCart = ({ checkoutCartURL, addToCart, isLoading }) => {
 
   return (
     <>
-      <div className={`vto-add-cart ${isLoading ? "display-none" : ""}`}>
-        <div className={`vto-cart-action ${isLoading ? "display-none" : ""}`}>
+      <div className={"vto-add-cart"}>
+        <div className={"vto-cart-action"}>
           {currentProduct.variations && (
             <>
               <div className="vto-product-price">
@@ -33,7 +33,7 @@ const VTOAddToCart = ({ checkoutCartURL, addToCart, isLoading }) => {
         </div>
         <div
           className={`vto-msg-wrapper animate__animated animate__bounceIn ${
-            !isLoading && isAddedToCart ? "" : "display-none"
+            isAddedToCart ? "" : "display-none"
           }`}
         >
           <div className="vto-msg">
@@ -54,7 +54,6 @@ const VTOAddToCart = ({ checkoutCartURL, addToCart, isLoading }) => {
 VTOAddToCart.propTypes = {
   checkoutCartURL: PropTypes.string.isRequired,
   addToCart: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool.isRequired,
 };
 
 export default VTOAddToCart;

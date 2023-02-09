@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useVTOProvider } from "./VTOContext";
 import "./VTOVariations.css";
 
-const VTOVariations = ({ loadProduct, isLoading }) => {
+const VTOVariations = ({ loadProduct }) => {
   // const { currentVariation, setCurrentVariation } = useVTOProvider();
   const { currentProduct, setCurrentProduct } = useVTOProvider();
 
@@ -21,9 +21,7 @@ const VTOVariations = ({ loadProduct, isLoading }) => {
 
   return (
     <>
-      <div
-        className={`vto-variations-wrapper ${isLoading ? "display-none" : ""}`}
-      >
+      <div className={"vto-variations-wrapper"}>
         <ul className="vto-variations">
           {currentProduct.variations ? (
             currentProduct.variations.map((variation, index) => {
@@ -57,7 +55,6 @@ const VTOVariations = ({ loadProduct, isLoading }) => {
 
 VTOVariations.propTypes = {
   loadProduct: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool.isRequired,
 };
 
 export default VTOVariations;

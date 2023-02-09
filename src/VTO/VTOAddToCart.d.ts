@@ -6,7 +6,6 @@ export interface VTOAddToCartProps
   product: any;
   checkoutCartURL: string;
   addToCart: any;
-  isLoading: boolean;
 }
 
 export default function VTOAddToCart(props: VTOAddToCartProps): JSX.Element;

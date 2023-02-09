@@ -3,7 +3,7 @@ import * as React from "react";
 export interface VTOPreloaderProps
   extends StandardProps<React.HTMLAttributes<HTMLDivElement>> {
   children?: React.ReactNode;
-  progress: number;
+  progress?: number;
   isLoading: boolean;
 }
 
