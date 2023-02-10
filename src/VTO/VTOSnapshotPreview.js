@@ -3,7 +3,7 @@ import { useVTOProvider } from "./VTOContext";
 import "./VTOSnapshotPreview.css";
 import { DownloadIcon } from "../assets/icons/DownloadIcon";
 import { CircleCheckIcon } from "../assets/icons/CircleCheckIcon";
-import { useRef, createElement } from "react";
+import { useRef } from "react";
 
 const VTOSnapshotPreview = () => {
   const { snapshotData, setSnapshotPreview } = useVTOProvider();
