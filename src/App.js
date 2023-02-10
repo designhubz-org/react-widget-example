@@ -45,7 +45,7 @@ const App = () => {
       }
     );
     const variationsData = await response.json();
-    let variationArray = [];
+    const variationArray = [];
     variationsData.data.forEach(function (item) {
       const variation = {
         code: item.referenceId,
@@ -58,8 +58,12 @@ const App = () => {
         pdpUrl:
           "https://eyewa.com/ae-en/30sundays-valiant-000241-1201-sunglasses.html",
       };
-      variationArray.push(variation);
+      variationArray.push({
+        index: 0,
+        variations: [variation],
+      });
     });
+
     return variationArray;
   };
 

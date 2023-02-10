@@ -34,19 +34,16 @@ const VTORecommendations = ({
       return (
         <div
           className={`vto-recommendation-item${view === "3d" ? " view3d" : ""}`}
-          key={item.code}
+          key={item.variations[item.index].code}
           onMouseUp={() => {
             if (!isDragging) {
-              console.log("loading SKU", item.code);
-              setTimeout(loadProduct(item.code), 200);
-              setCurrentProduct({
-                index: 0,
-                variations: item.variations,
-              });
+              console.log("loading SKU", item.variations[item.index].code);
+              setTimeout(loadProduct(item.variations[item.index].code), 200);
+              setCurrentProduct({ ...item });
             }
           }}
         >
-          <img src={item.thumbnailUrl} alt="thumbnail" />
+          <img src={item.variations[item.index].thumbnailUrl} alt="thumbnail" />
         </div>
       );
     },
