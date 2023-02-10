@@ -1,27 +1,42 @@
-import { useRef, useEffect, useCallback, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { auth, setDeployment, createEyewearWidget } from "designhubz-widget";
+import useEventCallback from "./useEventCallback";
+import { useVTOProvider } from "./VTOContext";
 
-const useVTOWidget = (userId) => {
+const useVTOWidget = ({ onUserInfoUpdate, onTrackingStatusChange }) => {
   const widgetRef = useRef(null);
   const containerRef = useRef(null);
 
   const [isError, setIsError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
-  const vtoIsWidgetInitiated = () => {
+  const { setWidgetStatus } = useVTOProvider();
+
+  const vtoSetError = (error) => {
+    setIsError(true);
+    setErrorMsg(error);
+  };
+
+  const onVTOUserInfoUpdate = useEventCallback((userInfo) => {
+    onUserInfoUpdate(userInfo);
+  }, []);
+
+  const onVTOTrackingStatusChange = useEventCallback((trackingStatus) => {
+    onTrackingStatusChange(trackingStatus);
+  }, []);
+
+  const vtoIsWidgetInitiated = useEventCallback(() => {
     if (!widgetRef.current) {
-      setIsError(true);
-      setErrorMsg("widget is not ready");
+      vtoSetError("widget is not ready");
       return false;
     }
     return true;
-  };
+  }, []);
 
-  const vtoCreateWidget = useCallback(async () => {
+  const vtoCreateWidget = useEventCallback(async () => {
     if (widgetRef.current) {
-      setIsError(true);
-      setErrorMsg("widget is already instantiated");
-      return;
+      vtoSetError("widget is already instantiated");
+      return null;
     }
 
     try {
@@ -31,56 +46,78 @@ const useVTOWidget = (userId) => {
       }
       const widget = await createEyewearWidget(containerRef.current);
       widgetRef.current = widget;
-      widgetRef.current.setUserId((userId || "test").toString());
-      // onUserInfoUpdate();
+      widget.onUserInfoUpdate.Add(onVTOUserInfoUpdate);
+      widget.onTrackingStatusChange.Add(onVTOTrackingStatusChange);
       return widget;
     } catch (e) {
-      setIsError(true);
-      setErrorMsg(e.toString());
+      vtoSetError(e.toString());
     }
-  }, [userId]);
+  }, []);
 
-  const vtoSwitchView = useCallback(async (view) => {
-    if (!vtoIsWidgetInitiated) return null;
+  const vtoSetUserId = useEventCallback(
+    async (userId) => {
+      if (!vtoIsWidgetInitiated()) return null;
+
+      try {
+        widgetRef.current.setUserId((userId || "test").toString());
+      } catch (e) {
+        vtoSetError(e.toString());
+      }
+    },
+    [vtoIsWidgetInitiated]
+  );
+
+  const vtoSwitchView = useEventCallback(async (view) => {
+    if (!vtoIsWidgetInitiated()) return null;
     try {
       await widgetRef.current.switchContext(view);
     } catch (e) {
-      setIsError(true);
-      setErrorMsg(e.toString());
+      vtoSetError(e.toString());
     }
   }, []);
 
-  const vtoLoadProduct = useCallback(async (vtoId) => {
-    if (!vtoIsWidgetInitiated) return null;
+  const vtoLoadProduct = useEventCallback(async (vtoId, progressHandler) => {
+    if (!vtoIsWidgetInitiated()) return null;
     try {
-      return await widgetRef.current.loadProduct(vtoId);
+      return await widgetRef.current.loadProduct(vtoId, progressHandler);
     } catch (e) {
-      setIsError(true);
-      setErrorMsg(e.toString());
+      vtoSetError(e.toString());
     }
   }, []);
 
-  const vtoFetchRecommendations = useCallback(async () => {
-    if (!vtoIsWidgetInitiated) return null;
+  const vtoTakeSnapshot = useEventCallback(async () => {
+    if (!vtoIsWidgetInitiated()) return null;
     try {
-      await widgetRef.current.fetchFitInfo()
-      const similarProds = await widgetRef.current.fetchRecommendations();
-      //setRecommendedProducts(similarProds.map((prod) => prod?.productKey));
-      return similarProds;
+      return await widgetRef.current.takeSnapshotAsync();
     } catch (e) {
-      setIsError(true);
-      setErrorMsg(e.toString());
+      vtoSetError(e.toString());
+    }
+  }, []);
+
+  const vtoFetchRecommendations = useEventCallback(async (count) => {
+    if (!vtoIsWidgetInitiated()) return null;
+    try {
+      // await widgetRef.current.fetchFitInfo();
+      const similarProds = await widgetRef.current.fetchRecommendations(count);
+      return similarProds.map((prod) => prod?.productKey);
+    } catch (e) {
+      vtoSetError(e.toString());
     }
   }, []);
 
   useEffect(() => {
     if (widgetRef.current) {
       return () => {
+        widgetRef.current.onUserInfoUpdate.Remove(onVTOUserInfoUpdate);
+        widgetRef.current.onTrackingStatusChange.Remove(
+          onVTOTrackingStatusChange
+        );
         widgetRef.current.dispose();
         widgetRef.current = null;
+        setWidgetStatus("NOT_READY");
       };
     }
-  }, []);
+  }, [onVTOUserInfoUpdate, onVTOTrackingStatusChange, setWidgetStatus]);
 
   return {
     widgetRef,
@@ -88,8 +125,10 @@ const useVTOWidget = (userId) => {
     isError,
     errorMsg,
     vtoCreateWidget,
+    vtoSetUserId,
     vtoSwitchView,
     vtoLoadProduct,
+    vtoTakeSnapshot,
     vtoFetchRecommendations,
   };
 };

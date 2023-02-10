@@ -1,20 +1,6 @@
-import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import "./VirtualTryOn.css";
-import useVTOWidget from "./useVTOWidget";
-import VTORecommendations from "./VTORecommendations";
-/*
-  Expected VTO Sub Components:
-  - VTORecommendations
-  - VTOAddToCart
-  - VTOVariations
-  - VTOShareSnapshot
-*/
-const WIDGET_STATUS = {
-  INITIATED: 'INITIATED',
-  PRODUCT_LOADED: 'PRODUCT_LOADED',
-  RECOMMENDATIONS_FETCHED: 'RECOMMENDATIONS_FETCHED',
-}
+import VTOWidget from "./VTOWidget";
+import { VTOProvider } from "./VTOContext";
 
 const VirtualTryOn = ({
   product,
@@ -24,49 +10,16 @@ const VirtualTryOn = ({
   addToCart,
   userId,
 }) => {
-  const {
-    containerRef,
-    vtoCreateWidget,
-    vtoLoadProduct,
-    vtoSwitchView,
-    vtoFetchRecommendations,
-  } = useVTOWidget(userId);
-  const [recommendedProducts, setRecommendedProducts] = useState([]);
-  const [variationData, setVariationData] = useState([]);
-  const [tryOnStatus, setTryOnStatus] = useState(null);
-
-
-  useEffect(() => {
-    vtoCreateWidget().then(() => {
-      vtoLoadProduct(product.variations[product.index].code);
-      vtoSwitchView("tryon");
-      vtoFetchRecommendations().then((result)=> {
-        setRecommendedProducts(result);
-      })
-    });
-  }, [
-    vtoCreateWidget,
-    vtoLoadProduct,
-    vtoSwitchView,
-    vtoFetchRecommendations,
-    product,
-  ]);
-
-  useEffect(() => {
-    if (recommendedProducts.length > 0) {
-      setVariationData(fetchVariationData(recommendedProducts));
-    }
-  }, [recommendedProducts]);
-
   return (
-    <>
-      <div className="vto-widget" ref={containerRef}>
-        <VTORecommendations
-            variationData={variationData}
-            takeSnapshotIcon={icons.takeSnapShotIcon}
-        />
-      </div>
-    </>
+    <VTOProvider initialProduct={product}>
+      <VTOWidget
+        checkoutCartURL={checkoutCartURL}
+        icons={icons}
+        fetchVariationData={fetchVariationData}
+        addToCart={addToCart}
+        userId={userId}
+      />
+    </VTOProvider>
   );
 };
 
