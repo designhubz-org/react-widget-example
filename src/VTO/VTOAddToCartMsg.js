@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./VTOAddToCartMsg.css";
 
 const VTOAddToCartMsg = ({ checkoutCartURL, isAddedToCart }) => {

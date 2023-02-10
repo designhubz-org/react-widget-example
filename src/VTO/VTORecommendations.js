@@ -25,7 +25,7 @@ const VTORecommendations = ({
           }
         }}
       >
-        <TakeSnapshotIcon color={view == "3d" ? "#80C8C1" : "#ffffff"} />
+        <TakeSnapshotIcon color={view === "3d" ? "#80C8C1" : "#ffffff"} />
       </div>
     );
   }, [variationData, view]);
@@ -33,7 +33,7 @@ const VTORecommendations = ({
     ({ item }) => {
       return (
         <div
-          className={`vto-recommendation-item${view == "3d" ? " view3d" : ""}`}
+          className={`vto-recommendation-item${view === "3d" ? " view3d" : ""}`}
           key={item.code}
           onMouseUp={() => {
             if (!isDragging) {
@@ -50,7 +50,7 @@ const VTORecommendations = ({
         </div>
       );
     },
-    [variationData,view]
+    [variationData, view]
   );
   useEffect(() => {
     if (variationData.length > 0) {

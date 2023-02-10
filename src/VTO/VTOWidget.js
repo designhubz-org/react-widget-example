@@ -111,7 +111,7 @@ const VTOWidget = ({
     <div className="vto-widget-wrapper">
       <div className="vto-widget" ref={containerRef}></div>
       {isLoadingProduct && <VTOPreloader progress={loadingProgress} />}
-      {!isLoadingProduct && trackingStatus == "Tracking" && (
+      {!isLoadingProduct && trackingStatus === "Tracking" && (
         <>
           <VTOAddToCart
             checkoutCartURL={checkoutCartURL}
