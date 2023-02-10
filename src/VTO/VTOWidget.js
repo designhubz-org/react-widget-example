@@ -20,6 +20,7 @@ const VTOWidget = ({
   const {
     currentProduct,
     setTrackingStatus,
+    trackingStatus,
     setSnapshotData,
     snapshotPreview,
     setSnapshotPreview,
@@ -110,7 +111,7 @@ const VTOWidget = ({
     <div className="vto-widget-wrapper">
       <div className="vto-widget" ref={containerRef}></div>
       {isLoadingProduct && <VTOPreloader progress={loadingProgress} />}
-      {!isLoadingProduct && (
+      {!isLoadingProduct && trackingStatus == "Tracking" && (
         <>
           <VTOAddToCart
             checkoutCartURL={checkoutCartURL}
