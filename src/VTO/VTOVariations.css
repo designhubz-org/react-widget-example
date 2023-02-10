@@ -1,7 +1,7 @@
 .vto-variations-wrapper {
   position: absolute;
-  left: 20px;
-  bottom: 150px;
+  left: 25px;
+  bottom: 135px;
 }
 
 .vto-variations {
@@ -12,7 +12,7 @@
 }
 
 .vto-variations > li {
-  margin-left: 1rem;
+  margin-left: 0.73rem;
 }
 
 .vto-variations > li:first-child {
@@ -20,8 +20,8 @@
 }
 
 .variation-item {
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
   border: 3px solid #fff;
   border-radius: 9999px;
   background-color: rgb(0 0 0 / 64%);
