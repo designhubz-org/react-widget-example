@@ -20,7 +20,6 @@ const VTOWidget = ({
   const {
     currentProduct,
     setTrackingStatus,
-    trackingStatus,
     setSnapshotData,
     snapshotPreview,
     setSnapshotPreview,
@@ -47,6 +46,9 @@ const VTOWidget = ({
     onTrackingStatusChange: (trackingStatus) => {
       console.log("trackingStatus:", trackingStatus);
       setTrackingStatus(trackingStatus);
+      if (trackingStatus === "Tracking") {
+        setIsFirstTracking(true);
+      }
     },
   });
   const [variationData, setVariationData] = useState([]);
@@ -54,6 +56,7 @@ const VTOWidget = ({
   const { widgetStatus, setWidgetStatus } = useVTOProvider();
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [isLoadingProduct, setIsLoadingProduct] = useState(true);
+  const [isFirstTracking, setIsFirstTracking] = useState(false);
 
   console.log("widgetStatus:", widgetStatus);
   const loadingHandler = (progress) => {
@@ -111,7 +114,7 @@ const VTOWidget = ({
     <div className="vto-widget-wrapper">
       <div className="vto-widget" ref={containerRef}></div>
       {isLoadingProduct && <VTOPreloader progress={loadingProgress} />}
-      {!isLoadingProduct && trackingStatus === "Tracking" && (
+      {!isLoadingProduct && isFirstTracking && (
         <>
           <div className="vto-product-title">
             {currentProduct.variations[currentProduct.index].name}
