@@ -7,6 +7,7 @@ const VTORecommendations = ({
   takeSnapshotIcon,
   takeSnapshot,
   loadProduct,
+  view,
 }) => {
   const { setCurrentProduct } = useVTOProvider();
 
@@ -24,10 +25,10 @@ const VTORecommendations = ({
           }
         }}
       >
-        <TakeSnapshotIcon />
+        <TakeSnapshotIcon color={view == "3d" ? "#80C8C1" : "#ffffff"} />
       </div>
     );
-  }, [variationData]);
+  }, [variationData, view]);
   const ProductButton = useCallback(
     ({ item }) => {
       return (

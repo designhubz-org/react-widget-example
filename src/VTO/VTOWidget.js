@@ -123,6 +123,7 @@ const VTOWidget = ({
             takeSnapshotIcon={icons.takeSnapShotIcon}
             takeSnapshot={takeSnapshot}
             loadProduct={loadProduct}
+            view={currentView}
           />
           <VTOViewSwitch
             switchView={switchView}
