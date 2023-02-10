@@ -10,7 +10,7 @@ import {
 } from "./assets/icons";
 import Modal from "./VTO/VTOModal.js";
 import VirtualTryOn from "./VTO/VirtualTryOn";
-import { currentProduct, variationData } from "./mockData";
+import { currentProduct } from "./mockData";
 
 const App = () => {
   const [VTOActivated, setVTOActivated] = useState(false);
@@ -74,7 +74,7 @@ const App = () => {
   return (
     <div className="App">
       <div className="sample-product">
-        <img src={productImage} />
+        <img src={productImage} alt="placeholder of product" />
         <div className="try-on-button" onClick={showModal}>
           <TryOnIcon />
           Try On

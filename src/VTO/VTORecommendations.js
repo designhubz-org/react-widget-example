@@ -47,7 +47,7 @@ const VTORecommendations = ({
         </div>
       );
     },
-    [variationData, view]
+    [view]
   );
   useEffect(() => {
     if (variationData.length > 0) {
@@ -111,8 +111,10 @@ const VTORecommendations = ({
           return (
             <>
               {i <= variationData.length / 2 &&
-                i + 1 > variationData.length / 2 && <TakeSnapshotButton />}
-              <ProductButton item={item} />
+                i + 1 > variationData.length / 2 && (
+                  <TakeSnapshotButton key={i} />
+                )}
+              <ProductButton item={item} key={i} />
             </>
           );
         })
