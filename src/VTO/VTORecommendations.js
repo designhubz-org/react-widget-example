@@ -33,7 +33,7 @@ const VTORecommendations = ({
     ({ item }) => {
       return (
         <div
-          className="vto-recommendation-item"
+          className={`vto-recommendation-item${view == "3d" ? " view3d" : ""}`}
           key={item.code}
           onMouseUp={() => {
             if (!isDragging) {
@@ -50,7 +50,7 @@ const VTORecommendations = ({
         </div>
       );
     },
-    [variationData]
+    [variationData,view]
   );
   useEffect(() => {
     if (variationData.length > 0) {
