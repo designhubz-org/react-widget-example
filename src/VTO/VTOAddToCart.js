@@ -1,7 +1,9 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import React, { useState } from "react";
+import "./VTOAddToCart.css";
 import "./VTOAddToCart.css";
 import { useVTOProvider } from "./VTOContext";
+const VTOAddToCartMsg = React.lazy(() => import("./VTOAddToCartMsg"));
 
 const VTOAddToCart = ({ checkoutCartURL, addToCart }) => {
   const [isAddedToCart, setIsAddedToCart] = useState(false);
@@ -25,27 +27,20 @@ const VTOAddToCart = ({ checkoutCartURL, addToCart }) => {
               </div>
               <div className="vto-action-wrapper">
                 <button className="vto-btn-add-cart" onClick={addToCartHandler}>
-                  Add to cart
+                  Add to Cart
                 </button>
               </div>
             </>
           )}
         </div>
-        <div
-          className={`vto-msg-wrapper animate__animated animate__bounceIn ${
-            isAddedToCart ? "" : "display-none"
-          }`}
-        >
-          <div className="vto-msg">
-            <div className="vto-msg-title">Product added to cart</div>
-            <div className="vto-msg-desc">
-              You&#39;re AED 10 away from free shipping
-            </div>
-          </div>
-          <div className="vto-link">
-            <a href={checkoutCartURL}>View cart</a>
-          </div>
-        </div>
+        <React.Suspense fallback={<></>}>
+          {isAddedToCart && (
+            <VTOAddToCartMsg
+              checkoutCartURL={checkoutCartURL}
+              isAddedToCart={isAddedToCart}
+            />
+          )}
+        </React.Suspense>
       </div>
     </>
   );
