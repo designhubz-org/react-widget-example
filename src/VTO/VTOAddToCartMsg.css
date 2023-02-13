@@ -2,3 +2,24 @@
   height: 76vh;
   top: 43%;
 }
+
+@media (max-width: 575.98px) {
+  .vto-modal-main {
+    top: 50%;
+    height: 100%;
+  }
+
+  .vto-msg-wrapper {
+    bottom: unset;
+    top: 57px;
+    padding: 15px 20px;
+    margin: 0 10px;
+    width: calc(100% - 60px);
+    color: white;
+    background: rgb(112 193 175 / 75%);
+  }
+
+  .vto-link > a {
+    color: white;
+  }
+}

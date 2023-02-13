@@ -132,3 +132,11 @@
 .display-flex {
   display: flex;
 }
+
+@media (max-width: 575.98px) {
+  .vto-widget > iframe {
+    min-height: 100% !important;
+    min-width: 100% !important;
+    border-radius: 0;
+  }
+}
