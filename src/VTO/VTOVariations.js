@@ -6,8 +6,6 @@ const VTOVariations = ({ loadProduct }) => {
   // const { currentVariation, setCurrentVariation } = useVTOProvider();
   const { currentProduct, setCurrentProduct } = useVTOProvider();
 
-  console.log("currentProduct:", currentProduct);
-
   const variationSelectHandler = (variationId, index) => {
     loadProduct(variationId);
     // setCurrentVariation(index);

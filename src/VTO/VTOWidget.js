@@ -115,9 +115,7 @@ const VTOWidget = ({
       )}
       {!isFirstLoading && isFirstTracking && (
         <>
-          <div className="vto-product-title">
-            {currentProduct.variations[currentProduct.index].name}
-          </div>
+          <div className="vto-product-title">{currentProduct.name}</div>
           <VTOAddToCart
             checkoutCartURL={checkoutCartURL}
             addToCart={addToCart}
