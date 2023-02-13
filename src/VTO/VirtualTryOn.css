@@ -128,3 +128,7 @@
   border-radius: 100px;
   background: #fff;
 }
+
+.display-flex {
+  display: flex;
+}

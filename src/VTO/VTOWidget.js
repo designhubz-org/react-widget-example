@@ -34,9 +34,7 @@ const VTOWidget = ({
     vtoFetchRecommendations,
   } = useVTOWidget({
     onUserInfoUpdate: (userInfo) => {
-      console.log("userInfo:", userInfo);
       vtoFetchRecommendations(10).then((result) => {
-        console.log("recommendation result:", result);
         const recommendedProducts = result;
         fetchVariationData(recommendedProducts).then((variations) => {
           setVariationData(variations);
@@ -44,7 +42,6 @@ const VTOWidget = ({
       });
     },
     onTrackingStatusChange: (trackingStatus) => {
-      console.log("trackingStatus:", trackingStatus);
       setTrackingStatus(trackingStatus);
       if (trackingStatus === "Tracking") {
         setIsFirstTracking(true);
@@ -54,18 +51,9 @@ const VTOWidget = ({
   const [variationData, setVariationData] = useState([]);
   const [currentView, setCurrentView] = useState("tryon");
   const { widgetStatus, setWidgetStatus } = useVTOProvider();
-  const [loadingProgress, setLoadingProgress] = useState(0);
-  const [isLoadingProduct, setIsLoadingProduct] = useState(true);
+  const [isFirstLoading, setIsFirstLoading] = useState(true);
+  const [isLoadingProduct, setIsLoadingProduct] = useState(false);
   const [isFirstTracking, setIsFirstTracking] = useState(false);
-
-  console.log("widgetStatus:", widgetStatus);
-  const loadingHandler = (progress) => {
-    console.log("progress:", progress);
-    setLoadingProgress(progress);
-    if (progress >= 1) {
-      setTimeout(() => setIsLoadingProduct(false), 2000);
-    }
-  };
 
   useEffect(() => {
     if (widgetStatus === "NOT_READY") {
@@ -74,7 +62,11 @@ const VTOWidget = ({
         vtoSetUserId(userId);
         vtoLoadProduct(
           currentProduct.variations[currentProduct.index].code,
-          loadingHandler
+          (progress) => {
+            if (progress >= 1) {
+              setTimeout(() => setIsFirstLoading(false), 2000);
+            }
+          }
         );
         vtoSwitchView("tryon");
       });
@@ -97,24 +89,31 @@ const VTOWidget = ({
 
   const takeSnapshot = () => {
     vtoTakeSnapshot().then((snapshot) => {
-      console.log("taken snapshot:", snapshot);
       const imgData = snapshot.getDataURL();
-      console.log("imgData:", imgData);
       setSnapshotData(imgData);
       setSnapshotPreview(true);
     });
   };
 
   const loadProduct = (productId) => {
-    // setIsLoading(true);
-    vtoLoadProduct(productId, loadingHandler);
+    setIsLoadingProduct(true);
+    vtoLoadProduct(productId, (progress) => {
+      if (progress >= 1) {
+        setTimeout(() => setIsLoadingProduct(false), 1000);
+      }
+    });
   };
 
   return (
     <div className="vto-widget-wrapper">
       <div className="vto-widget" ref={containerRef}></div>
-      {isLoadingProduct && <VTOPreloader progress={loadingProgress} />}
-      {!isLoadingProduct && isFirstTracking && (
+      {(isFirstLoading || isLoadingProduct) && (
+        <VTOPreloader
+          isFirstLoading={isFirstLoading}
+          isLoadingProduct={isLoadingProduct}
+        />
+      )}
+      {!isFirstLoading && isFirstTracking && (
         <>
           <div className="vto-product-title">
             {currentProduct.variations[currentProduct.index].name}
@@ -139,7 +138,7 @@ const VTOWidget = ({
           />
         </>
       )}
-      {!isLoadingProduct && snapshotPreview && <VTOSnapshotPreview />}
+      {!isFirstLoading && snapshotPreview && <VTOSnapshotPreview />}
     </div>
   );
 };

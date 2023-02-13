@@ -92,11 +92,3 @@
 .vto-download-action:hover {
   font-weight: 600;
 }
-
-.display-flex {
-  display: flex;
-}
-
-.display-none {
-  display: none !important;
-}
