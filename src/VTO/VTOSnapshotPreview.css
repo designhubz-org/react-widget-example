@@ -75,7 +75,7 @@
   align-items: center;
   justify-content: center;
   padding: 15px;
-  background: rgb(31 31 31 / 56%);
+  background: rgb(0 0 0 / 25%);
   min-width: 40%;
   font-size: 13px;
   border-radius: 10px;
@@ -91,4 +91,33 @@
 
 .vto-download-action:hover {
   font-weight: 600;
+}
+
+@media (max-width: 575.98px) {
+  .vto-snapshot-preview {
+    border-radius: 0;
+  }
+
+  .vto-preview-container {
+    padding: 0;
+  }
+
+  .vto-preview-container > img {
+    height: 100% !important;
+    border-radius: 0;
+  }
+
+  .vto-switch-view-button,
+  .vto-modal-closeBtn {
+    z-index: -1;
+  }
+
+  .vto-preview-msg {
+    width: calc(100% - 60px);
+    top: 30px;
+  }
+
+  .vto-download-wrapper {
+    width: calc(100% - 60px);
+  }
 }
