@@ -139,4 +139,8 @@
     min-width: 100% !important;
     border-radius: 0;
   }
+  .vto-recommendation-wrapper {
+    left: 12px;
+    right: 12px;
+  }
 }

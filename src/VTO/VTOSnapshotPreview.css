@@ -109,7 +109,7 @@
 
   .vto-switch-view-button,
   .vto-modal-closeBtn {
-    /* z-index: -1; */
+    /*z-index: 0;*/
   }
 
   .vto-preview-msg {
