@@ -6,8 +6,6 @@ const VTOVariations = ({ loadProduct }) => {
   // const { currentVariation, setCurrentVariation } = useVTOProvider();
   const { currentProduct, setCurrentProduct } = useVTOProvider();
 
-  console.log("currentProduct:", currentProduct);
-
   const variationSelectHandler = (variationId, index) => {
     loadProduct(variationId);
     // setCurrentVariation(index);
@@ -22,32 +20,29 @@ const VTOVariations = ({ loadProduct }) => {
   return (
     <>
       <div className={"vto-variations-wrapper"}>
-        <ul className="vto-variations">
+        <div className="vto-variations">
           {currentProduct.variations ? (
             currentProduct.variations.map((variation, index) => {
               return (
-                <li key={index}>
-                  <div
-                    className={`variation-item ${
-                      index === currentProduct.index ? "active" : ""
-                    } `}
-                    style={{
-                      backgroundColor: variation.hexColor,
-                      backgroundImage: `url('${variation.textureUrl}')`,
-                    }}
-                    onClick={() =>
-                      variationSelectHandler(variation.code, index)
-                    }
-                  >
-                    {index}
-                  </div>
-                </li>
+                <div
+                  key={index}
+                  className={`variation-item ${
+                    index === currentProduct.index ? "active" : ""
+                  } `}
+                  style={{
+                    backgroundColor: variation.hexColor,
+                    backgroundImage: `url('${variation.textureUrl}')`,
+                  }}
+                  onClick={() => variationSelectHandler(variation.code, index)}
+                >
+                  {index}
+                </div>
               );
             })
           ) : (
             <></>
           )}
-        </ul>
+        </div>
       </div>
     </>
   );

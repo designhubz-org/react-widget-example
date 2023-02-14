@@ -10,7 +10,7 @@ import {
 } from "./assets/icons";
 import Modal from "./VTO/VTOModal.js";
 import VirtualTryOn from "./VTO/VirtualTryOn";
-import { currentProduct, variationData } from "./mockData";
+import { currentProduct } from "./mockData";
 
 const App = () => {
   const [VTOActivated, setVTOActivated] = useState(false);
@@ -35,7 +35,7 @@ const App = () => {
     // Current Eyewa: POST https://bff.eyewa.com/v1/catalog/ae-en/productList - Requires Bearer Token
     if (!variationCodes) return [];
     const response = await fetch(
-      `https://prod-prd-gateway-api.designhubz.com/workspace/eyewear/variation/?&collectProductDetails=true&referenceIds=${variationCodes}`,
+      `https://prod-prd-gateway-api.designhubz.com/workspace/eyewear/variation/?&collectVariationDetails=true&collectProductDetails=true&referenceIds=${variationCodes}`,
       {
         method: "GET",
         headers: {
@@ -45,22 +45,42 @@ const App = () => {
       }
     );
     const variationsData = await response.json();
-    let variationArray = [];
+    const productArray = [];
     variationsData.data.forEach(function (item) {
-      const variation = {
-        code: item.referenceId,
-        hexColor: item.colorHex,
-        price: 369,
-        currency: "AED",
-        thumbnailUrl: item.thumbnailUrl,
+      const variations = [
+        {
+          code: item.referenceId,
+          hexColor: item.colorHex,
+          price: 369,
+          currency: "AED",
+          thumbnailUrl: item.thumbnailUrl,
+          name: item.name,
+          textureUrl: "",
+          pdpUrl:
+            "https://eyewa.com/ae-en/30sundays-valiant-000241-1201-sunglasses.html",
+        },
+      ];
+      for (const variation of item.variations) {
+        variations.push({
+          code: variation.referenceId,
+          hexColor: variation.colorHex,
+          price: 369,
+          currency: "AED",
+          thumbnailUrl: variation.thumbnailUrl,
+          name: variation.name,
+          textureUrl: "",
+          pdpUrl:
+            "https://eyewa.com/ae-en/30sundays-valiant-000241-1201-sunglasses.html",
+        });
+      }
+      productArray.push({
+        index: 0,
         name: item.product.name,
-        textureUrl: "",
-        pdpUrl:
-          "https://eyewa.com/ae-en/30sundays-valiant-000241-1201-sunglasses.html",
-      };
-      variationArray.push(variation);
+        variations,
+      });
     });
-    return variationArray;
+
+    return productArray;
   };
 
   const addToCart = (variation) => {
@@ -70,7 +90,7 @@ const App = () => {
   return (
     <div className="App">
       <div className="sample-product">
-        <img src={productImage} />
+        <img src={productImage} alt="placeholder of product" />
         <div className="try-on-button" onClick={showModal}>
           <TryOnIcon />
           Try On

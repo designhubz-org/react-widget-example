@@ -11,15 +11,12 @@
   display: flex;
 }
 
-.vto-variations > li {
-  margin-left: 0.73rem;
-}
-
-.vto-variations > li:first-child {
+.vto-variations > .variation-item:first-child {
   margin-left: 0;
 }
 
 .variation-item {
+  margin-left: 0.73rem;
   width: 24px;
   height: 24px;
   border: 3px solid #fff;

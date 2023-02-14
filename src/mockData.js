@@ -1,5 +1,6 @@
 export const currentProduct = {
   index: 0,
+  name: "30Sundays VALIANT",
   variations: [
     {
       code: "000241-1201",
@@ -8,7 +9,7 @@ export const currentProduct = {
       currency: "AED",
       thumbnailUrl:
         "https://cdn.eyewa.com/cdn-cgi/image/width=900,height=900,quality=80/media/catalog/product/s/u/sunglasses-30sundays-000241-1201-1.jpg",
-      name: "30Sundays VALIANT",
+      name: "Gray",
       textureUrl: "",
       pdpUrl:
         "https://eyewa.com/ae-en/30sundays-valiant-000241-1201-sunglasses.html",
@@ -20,7 +21,7 @@ export const currentProduct = {
       currency: "AED",
       thumbnailUrl:
         "https://cdn.eyewa.com/cdn-cgi/image/width=900,height=900,quality=80/media/catalog/product/s/u/sunglasses-30sundays-000241-2906-1.jpg",
-      name: "30Sundays VALIANT",
+      name: "Yellow",
       textureUrl: "",
       pdpUrl:
         "https://eyewa.com/ae-en/30sundays-valiant-000241-2906-sunglasses.html",

@@ -1,6 +1,40 @@
-import { useEffect, useCallback } from "react";
+import { useEffect, useRef, Fragment } from "react";
 import { useVTOProvider } from "./VTOContext";
 // import PropTypes from "prop-types";
+
+// Note: Refactored VTORecommendation, fixed eslint warnings.
+
+const TakeSnapshotButton = ({
+  TakeSnapshotIcon,
+  hasNoRecommendation,
+  currentView,
+  onTakeSnapshot,
+}) => {
+  return (
+    <div
+      className={`vto-recommendation-item vto-snapshot ${
+        hasNoRecommendation && "no-recommendations"
+      }`}
+      onMouseUp={onTakeSnapshot}
+    >
+      <TakeSnapshotIcon color={currentView === "3d" ? "#80C8C1" : "#ffffff"} />
+    </div>
+  );
+};
+
+const ProductButton = ({ item, currentView, onSelectRecommendedProduct }) => {
+  return (
+    <div
+      className={`vto-recommendation-item${
+        currentView === "3d" ? " view3d" : ""
+      }`}
+      key={item.variations[item.index].code}
+      onMouseUp={() => onSelectRecommendedProduct(item)}
+    >
+      <img src={item.variations[item.index].thumbnailUrl} alt="thumbnail" />
+    </div>
+  );
+};
 
 const VTORecommendations = ({
   variationData,
@@ -10,51 +44,24 @@ const VTORecommendations = ({
   view,
 }) => {
   const { setCurrentProduct } = useVTOProvider();
+  const isDragging = useRef(false);
 
-  const TakeSnapshotIcon = takeSnapshotIcon;
-  let isDragging = false;
-  const TakeSnapshotButton = useCallback(() => {
-    return (
-      <div
-        className={`vto-recommendation-item vto-snapshot ${
-          variationData.length === 0 ? "no-recommendations" : ""
-        }`}
-        onMouseUp={() => {
-          if (!isDragging) {
-            takeSnapshot();
-          }
-        }}
-      >
-        <TakeSnapshotIcon color={view == "3d" ? "#80C8C1" : "#ffffff"} />
-      </div>
-    );
-  }, [variationData, view]);
-  const ProductButton = useCallback(
-    ({ item }) => {
-      return (
-        <div
-          className={`vto-recommendation-item${view == "3d" ? " view3d" : ""}`}
-          key={item.code}
-          onMouseUp={() => {
-            if (!isDragging) {
-              console.log("loading SKU", item.code);
-              setTimeout(loadProduct(item.code), 200);
-              setCurrentProduct({
-                index: 0,
-                variations: item.variations,
-              });
-            }
-          }}
-        >
-          <img src={item.thumbnailUrl} alt="thumbnail" />
-        </div>
-      );
-    },
-    [variationData,view]
-  );
+  const onTakeSnapshot = () => {
+    if (!isDragging.current) {
+      takeSnapshot();
+    }
+  };
+  const onSelectRecommendedProduct = (item) => {
+    if (!isDragging.current) {
+      console.log("loading SKU", item.variations[item.index].code);
+      setTimeout(loadProduct(item.variations[item.index].code), 200);
+      setCurrentProduct({ ...item });
+    }
+  };
+
   useEffect(() => {
     if (variationData.length > 0) {
-      let ele = document.querySelector(".vto-recommendation-wrapper");
+      const ele = document.querySelector(".vto-recommendation-wrapper");
       ele.scrollLeft = (ele.scrollWidth - ele.clientWidth) / 2;
 
       // Drag to scroll feature
@@ -69,7 +76,7 @@ const VTORecommendations = ({
       const mouseDownHandler = function (e) {
         ele.style.cursor = "grabbing";
         ele.style.userSelect = "none";
-        if (isDragging) isDragging = false;
+        if (isDragging.current) isDragging.current = false;
         pos = {
           left: ele.scrollLeft,
           top: ele.scrollTop,
@@ -88,7 +95,7 @@ const VTORecommendations = ({
         const dy = e.clientY - pos.y;
 
         if (dx !== 0 && dx !== null) {
-          isDragging = true;
+          isDragging.current = true;
         }
         // Scroll the element
         ele.scrollTop = pos.top - dy;
@@ -112,15 +119,31 @@ const VTORecommendations = ({
       {variationData.length > 0 ? (
         variationData.map((item, i) => {
           return (
-            <>
+            <Fragment key={i}>
               {i <= variationData.length / 2 &&
-                i + 1 > variationData.length / 2 && <TakeSnapshotButton />}
-              <ProductButton item={item} />
-            </>
+                i + 1 > variationData.length / 2 && (
+                  <TakeSnapshotButton
+                    hasNoRecommendation={false}
+                    currentView={view}
+                    TakeSnapshotIcon={takeSnapshotIcon}
+                    onTakeSnapshot={onTakeSnapshot}
+                  />
+                )}
+              <ProductButton
+                item={item}
+                currentView={view}
+                onSelectRecommendedProduct={onSelectRecommendedProduct}
+              />
+            </Fragment>
           );
         })
       ) : (
-        <TakeSnapshotButton />
+        <TakeSnapshotButton
+          hasNoRecommendation={true}
+          currentView={view}
+          TakeSnapshotIcon={takeSnapshotIcon}
+          onTakeSnapshot={onTakeSnapshot}
+        />
       )}
     </div>
   );
