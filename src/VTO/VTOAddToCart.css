@@ -168,3 +168,9 @@
     transform: scaleX(1);
   }
 }
+
+@media (max-width: 575.98px) {
+  .vto-cart-action {
+    right: 15px;
+  }
+}
