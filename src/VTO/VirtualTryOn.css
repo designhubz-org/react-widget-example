@@ -20,7 +20,7 @@
   min-width: calc(100% - 8px) !important;
   border-radius: 15px;
   position: absolute;
-  z-index: -1;
+  /* z-index: -1; */
 }
 
 .vto-product-title {
