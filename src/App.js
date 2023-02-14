@@ -61,17 +61,19 @@ const App = () => {
         },
       ];
       for (const variation of item.variations) {
-        variations.push({
-          code: variation.referenceId,
-          hexColor: variation.colorHex,
-          price: 369,
-          currency: "AED",
-          thumbnailUrl: variation.thumbnailUrl,
-          name: variation.name,
-          textureUrl: "",
-          pdpUrl:
-            "https://eyewa.com/ae-en/30sundays-valiant-000241-1201-sunglasses.html",
-        });
+        if (variation.status == "APPROVED") {
+          variations.push({
+            code: variation.referenceId,
+            hexColor: variation.colorHex,
+            price: 369,
+            currency: "AED",
+            thumbnailUrl: variation.thumbnailUrl,
+            name: variation.name,
+            textureUrl: "",
+            pdpUrl:
+              "https://eyewa.com/ae-en/30sundays-valiant-000241-1201-sunglasses.html",
+          });
+        }
       }
       productArray.push({
         index: 0,
