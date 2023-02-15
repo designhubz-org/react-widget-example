@@ -61,7 +61,7 @@ const App = () => {
         },
       ];
       for (const variation of item.variations) {
-        if (variation.status == "APPROVED") {
+        if (variation.status === "APPROVED") {
           variations.push({
             code: variation.referenceId,
             hexColor: variation.colorHex,

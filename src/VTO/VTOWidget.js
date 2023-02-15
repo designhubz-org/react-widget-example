@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import "./VirtualTryOn.css";
 import useVTOWidget from "./useVTOWidget";
 import VTORecommendations from "./VTORecommendations";
 import VTOViewSwitch from "./VTOViewSwitch";
@@ -54,6 +53,7 @@ const VTOWidget = ({
   const [isFirstLoading, setIsFirstLoading] = useState(true);
   const [isLoadingProduct, setIsLoadingProduct] = useState(false);
   const [isFirstTracking, setIsFirstTracking] = useState(false);
+  const [isTakingSnapshot, setIsTakingSnapshot] = useState(false);
 
   useEffect(() => {
     if (widgetStatus === "NOT_READY") {
@@ -64,7 +64,7 @@ const VTOWidget = ({
           currentProduct.variations[currentProduct.index].code,
           (progress) => {
             if (progress >= 1) {
-              setTimeout(() => setIsFirstLoading(false), 2000);
+              setTimeout(() => setIsFirstLoading(false), 2500);
             }
           }
         );
@@ -88,10 +88,12 @@ const VTOWidget = ({
   };
 
   const takeSnapshot = () => {
+    setIsTakingSnapshot(true);
     vtoTakeSnapshot().then((snapshot) => {
       const imgData = snapshot.getDataURL();
       setSnapshotData(imgData);
       setSnapshotPreview(true);
+      setTimeout(() => setIsTakingSnapshot(false), 1000);
     });
   };
 
@@ -107,10 +109,11 @@ const VTOWidget = ({
   return (
     <div className="vto-widget-wrapper">
       <div className="vto-widget" ref={containerRef}></div>
-      {(isFirstLoading || isLoadingProduct) && (
+      {(isFirstLoading || isLoadingProduct || isTakingSnapshot) && (
         <VTOPreloader
           isFirstLoading={isFirstLoading}
           isLoadingProduct={isLoadingProduct}
+          isTakingSnapshot={isTakingSnapshot}
         />
       )}
       {!isFirstLoading && isFirstTracking && (

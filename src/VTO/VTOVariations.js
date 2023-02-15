@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import { useVTOProvider } from "./VTOContext";
-import "./VTOVariations.css";
 
 const VTOVariations = ({ loadProduct }) => {
   // const { currentVariation, setCurrentVariation } = useVTOProvider();

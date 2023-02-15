@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import "./VTOModal.css";
+import "./VirtualTryOn.css";
 
 const VTOModal = ({ handleClose, show, children, CloseIcon }) => {
   const showHideClassName = show
