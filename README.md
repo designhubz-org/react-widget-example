@@ -1,6 +1,6 @@
 # React Widget Example
 
-Example code for showcase of Designhubz TryOn widget built upon React. This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Example code for TryOn widget integration in React projects. This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 # Getting Started
 
@@ -11,25 +11,25 @@ npm run start
 ```
 
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-To builds the app for production to the `build` folder.
-
-```
-npm run build
-```
-
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
 The example page is hosted on https://d2v6wmk4yqo2ys.cloudfront.net/flutter/demo.hml?orgId=10139402
 
-# Use Case
+# Usage / Integration
+Simply move the VTO directory to your project and import the VirtualTryOn component.
+Additionally, you may import the VTOModal component to embed the experience in a page modal.
 
-You can see the example of use VirtualTryOn component and required props.
+```
+import Modal from "./VTO/VTOModal.js";
+import VirtualTryOn from "./VTO/VirtualTryOn";
+```
+
+### UI Customization
+All CSS styling are in gathered in one CSS file `VirtualTryOn.css`.
+Making UI changes to the widget elements is easily possible by making updates to the CSS classes.
+
+# Use Cases
+
+In the example below, you can find the usage of VirtualTryOn component and required props.
 
 ### Example
 
@@ -91,7 +91,8 @@ const App = () => {
 export default App;
 ```
 
-The `fetchVariationData` function will look like following:
+The `fetchVariationData` function is meant to get full variation data from eCommerce app database.
+In the example below, we are fetching the data from designhubz internal data:
 
 ```javascript
 const fetchVariationData = async (variationCodes) => {
@@ -146,10 +147,42 @@ const fetchVariationData = async (variationCodes) => {
   return productArray;
 };
 ```
-
+Product object should have the structure below. In our example, we are formatting the returned variation data to match the designed structure and adding them to product object.
+```
+{
+  index: 0,
+  name: "30Sundays VALIANT",
+  variations: [
+    {
+      code: "000241-1201",
+      hexColor: "#C0C0C0",
+      price: 369,
+      currency: "AED",
+      thumbnailUrl:
+        "https://cdn.eyewa.com/cdn-cgi/image/width=900,height=900,quality=80/media/catalog/product/s/u/sunglasses-30sundays-000241-1201-1.jpg",
+      name: "Gray",
+      textureUrl: "",
+      pdpUrl:
+        "https://eyewa.com/ae-en/30sundays-valiant-000241-1201-sunglasses.html",
+    },
+    {
+      code: "000241-2906",
+      hexColor: "#ffd700",
+      price: 185,
+      currency: "AED",
+      thumbnailUrl:
+        "https://cdn.eyewa.com/cdn-cgi/image/width=900,height=900,quality=80/media/catalog/product/s/u/sunglasses-30sundays-000241-2906-1.jpg",
+      name: "Yellow",
+      textureUrl: "",
+      pdpUrl:
+        "https://eyewa.com/ae-en/30sundays-valiant-000241-2906-sunglasses.html",
+    }
+}
+```
+`index` parameter indicates the array index of the variation to be loaded initially.
 ## `VTOModal`
 
-This is a component to be used for showing modal on center of the screen.
+Component used for showing a modal in the middle of the screen.
 
 ### Example
 
@@ -173,7 +206,7 @@ const hideModal = () => {
 
 ## `VirtualTryOn`
 
-This is a main component to show designhubz widget assisting virtual-tryon expeirence and display product in 3D.
+This is the main widget component that embeds the virtual-tryon and 3D experiences.
 
 ### Example
 
@@ -208,7 +241,7 @@ const addToCart = () => {};
 
 ## `useVTOWidget`
 
-It's the custom hook to expose functions from Designhubz widget to react component side.
+It's the custom hook to expose functions from Designhubz widget to the React components.
 
 ### Example
 
@@ -313,3 +346,4 @@ const {
   setSnapshotPreview,
 } = useVTOProvider();
 ```
+
