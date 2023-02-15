@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import "./VirtualTryOn.css";
 import useVTOWidget from "./useVTOWidget";
 import VTORecommendations from "./VTORecommendations";
 import VTOViewSwitch from "./VTOViewSwitch";
@@ -64,7 +63,7 @@ const VTOWidget = ({
           currentProduct.variations[currentProduct.index].code,
           (progress) => {
             if (progress >= 1) {
-              setTimeout(() => setIsFirstLoading(false), 2000);
+              setTimeout(() => setIsFirstLoading(false), 2500);
             }
           }
         );

@@ -1,7 +1,5 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
-import "./VTOAddToCart.css";
-import "./VTOAddToCart.css";
 import { useVTOProvider } from "./VTOContext";
 const VTOAddToCartMsg = React.lazy(() => import("./VTOAddToCartMsg"));
 

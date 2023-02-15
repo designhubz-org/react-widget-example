@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import { useVTOProvider } from "./VTOContext";
-import "./VTOSnapshotPreview.css";
 import { DownloadIcon } from "../assets/icons/DownloadIcon";
 import { CircleCheckIcon } from "../assets/icons/CircleCheckIcon";
 import { useRef } from "react";

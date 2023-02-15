@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import { VTOEywaIcon } from "./VTOEywaIcon";
-import "./VTOPreloader.css";
 
 const VTOPreloader = ({ isFirstLoading, isLoadingProduct }) => {
   return (
