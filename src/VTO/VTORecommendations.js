@@ -29,7 +29,14 @@ const ProductButton = ({ item, currentView, onSelectRecommendedProduct }) => {
         currentView === "3d" ? " view3d" : ""
       }`}
       key={item.variations[item.index].code}
-      onMouseUp={() => onSelectRecommendedProduct(item)}
+      onMouseUp={(e) => {
+        onSelectRecommendedProduct(item);
+        const elems = document.querySelectorAll(".active");
+        [].forEach.call(elems, function(el) {
+          el.classList.remove("active");
+        });
+        e.currentTarget.classList.add('active');
+      }}
     >
       <img src={item.variations[item.index].thumbnailUrl} alt="thumbnail" />
     </div>

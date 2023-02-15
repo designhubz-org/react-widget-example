@@ -137,6 +137,10 @@
   border: 2px solid #ffffff;
 }
 
+.vto-recommendation-item.active {
+  box-shadow: 0px 0px 0px 3px #80c8c1;
+}
+
 .vto-recommendation-item.view3d {
   border: 2px solid #d3dcec;
   width: 70px;
