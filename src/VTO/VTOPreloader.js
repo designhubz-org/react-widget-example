@@ -1,7 +1,11 @@
 import PropTypes from "prop-types";
 import { VTOEywaIcon } from "./VTOEywaIcon";
 
-const VTOPreloader = ({ isFirstLoading, isLoadingProduct }) => {
+const VTOPreloader = ({
+  isFirstLoading,
+  isLoadingProduct,
+  isTakingSnapshot,
+}) => {
   return (
     <>
       <div className={"vto-loader"}>
@@ -21,7 +25,7 @@ const VTOPreloader = ({ isFirstLoading, isLoadingProduct }) => {
             </div>
           </div>
         )}
-        {isLoadingProduct && (
+        {(isLoadingProduct || isTakingSnapshot) && (
           <div className="vto-product-loader">
             <div className="vto-loading-anim"></div>
           </div>
@@ -34,6 +38,7 @@ const VTOPreloader = ({ isFirstLoading, isLoadingProduct }) => {
 VTOPreloader.propTypes = {
   isFirstLoading: PropTypes.bool.isRequired,
   isLoadingProduct: PropTypes.bool.isRequired,
+  isTakingSnapshot: PropTypes.bool.isRequired,
 };
 
 export default VTOPreloader;

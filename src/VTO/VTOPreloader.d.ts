@@ -5,6 +5,7 @@ export interface VTOPreloaderProps
   children?: React.ReactNode;
   isFirstLoading: boolean;
   isLoadingProduct: boolean;
+  isTakingSnapshot: boolean;
 }
 
 export default function VTOPreloader(props: VTOPreloaderProps): JSX.Element;
