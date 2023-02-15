@@ -15,8 +15,8 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The example page is hosted on https://d2v6wmk4yqo2ys.cloudfront.net/flutter/demo.hml?orgId=10139402
 
 # Usage / Integration
-Simply move the VTO directory to your project and import the VirtualTryOn component.
-Additionally, you may import the VTOModal component to embed the experience in a page modal.
+Simply move the `VTO` directory to your project and import the `VirtualTryOn` component.
+Additionally, you may import the `VTOModal` component to embed the experience in a page modal.
 
 ```
 import Modal from "./VTO/VTOModal.js";
@@ -25,7 +25,7 @@ import VirtualTryOn from "./VTO/VirtualTryOn";
 
 ### UI Customization
 All CSS styling are in gathered in one CSS file `VirtualTryOn.css`.
-Making UI changes to the widget elements is easily possible by making updates to the CSS classes.
+Making UI changes to the widget elements is as easy as applying changes to the CSS classes.
 
 # Use Cases
 
@@ -147,7 +147,7 @@ const fetchVariationData = async (variationCodes) => {
   return productArray;
 };
 ```
-Product object should have the structure below. In our example, we are formatting the returned variation data to match the designed structure and adding them to product object.
+Product object should have the structure below. In our example, we are formatting the returned variation data to match the designated structure and adding them to product object.
 ```
 {
   index: 0,
