@@ -13,7 +13,7 @@ const TakeSnapshotButton = ({
   return (
     <div
       className={`vto-recommendation-item vto-snapshot ${
-        hasNoRecommendation && "no-recommendations"
+        hasNoRecommendation? "no-recommendations":"recommendations"
       }`}
       onMouseUp={onTakeSnapshot}
     >
@@ -54,9 +54,9 @@ const VTORecommendations = ({
   const isDragging = useRef(false);
 
   const onTakeSnapshot = () => {
-    if (!isDragging.current) {
+    //if (!isDragging.current) {
       takeSnapshot();
-    }
+    //}
   };
   const onSelectRecommendedProduct = (item) => {
     if (!isDragging.current) {
@@ -122,37 +122,42 @@ const VTORecommendations = ({
   }, [variationData]);
 
   return (
-    <div className="vto-recommendation-wrapper">
-      {variationData.length > 0 ? (
-        variationData.map((item, i) => {
-          return (
-            <Fragment key={i}>
-              {i <= variationData.length / 2 &&
-                i + 1 > variationData.length / 2 && (
-                  <TakeSnapshotButton
-                    hasNoRecommendation={false}
-                    currentView={view}
-                    TakeSnapshotIcon={takeSnapshotIcon}
-                    onTakeSnapshot={onTakeSnapshot}
-                  />
-                )}
-              <ProductButton
-                item={item}
-                currentView={view}
-                onSelectRecommendedProduct={onSelectRecommendedProduct}
-              />
-            </Fragment>
-          );
-        })
-      ) : (
+    <>
+      <div className="vto-recommendation-wrapper">
+        {variationData.length > 0 ? (
+          variationData.map((item, i) => {
+            return (
+              <Fragment key={i}>
+                {/*i <= variationData.length / 2 &&
+                  i + 1 > variationData.length / 2 && (
+
+                  )*/}
+                <ProductButton
+                  item={item}
+                  currentView={view}
+                  onSelectRecommendedProduct={onSelectRecommendedProduct}
+                />
+              </Fragment>
+            );
+          })
+        ) : (
+          <TakeSnapshotButton
+            hasNoRecommendation={true}
+            currentView={view}
+            TakeSnapshotIcon={takeSnapshotIcon}
+            onTakeSnapshot={onTakeSnapshot}
+          />
+        )}
+      </div>
+      {variationData.length > 0 && (
         <TakeSnapshotButton
-          hasNoRecommendation={true}
+          hasNoRecommendation={false}
           currentView={view}
           TakeSnapshotIcon={takeSnapshotIcon}
           onTakeSnapshot={onTakeSnapshot}
         />
       )}
-    </div>
+    </>
   );
 };
 
