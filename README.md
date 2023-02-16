@@ -23,6 +23,12 @@ import Modal from "./VTO/VTOModal.js";
 import VirtualTryOn from "./VTO/VirtualTryOn";
 ```
 
+You would still need to install designhubz widget package to your project. This package is imported in the `useVTOWidget` general custom hook:
+```
+import { auth, setDeployment, createEyewearWidget } from "designhubz-widget";
+```
+
+
 ### UI Customization
 All CSS styling are in gathered in one CSS file `VirtualTryOn.css`.
 Making UI changes to the widget elements is as easy as applying changes to the CSS classes.
