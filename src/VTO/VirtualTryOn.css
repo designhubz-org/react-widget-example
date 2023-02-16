@@ -101,7 +101,7 @@
   bottom: 15px;
   scroll-snap-align: center;
   cursor: grab;
-  padding-bottom: 10px;
+  padding: 10px 0;
   align-items: center;
 }
 
@@ -173,7 +173,11 @@
 .vto-snapshot.no-recommendations {
   margin: 0 auto;
 }
-
+.vto-snapshot.recommendations {
+  position: absolute;
+  bottom: 33px;
+  background: #201b1bcf;
+}
 .vto-switch-view-button {
   cursor: pointer;
   border: none;
