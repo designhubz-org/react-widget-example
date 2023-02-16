@@ -13,7 +13,7 @@ const VTOSnapshotPreview = () => {
   };
   const downloadSnapshotPreview = () => {
     // downloadRef.current.href = snapshotData;
-    console.log("downloading....");
+    // console.log("downloading....");
     downloadRef.current.download = "tryon-snapshot.png";
     downloadRef.current.click();
   };

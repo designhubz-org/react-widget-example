@@ -32,10 +32,10 @@ const ProductButton = ({ item, currentView, onSelectRecommendedProduct }) => {
       onMouseUp={(e) => {
         onSelectRecommendedProduct(item);
         const elems = document.querySelectorAll(".active");
-        [].forEach.call(elems, function(el) {
+        [].forEach.call(elems, function (el) {
           el.classList.remove("active");
         });
-        e.currentTarget.classList.add('active');
+        e.currentTarget.classList.add("active");
       }}
     >
       <img src={item.variations[item.index].thumbnailUrl} alt="thumbnail" />
@@ -60,7 +60,7 @@ const VTORecommendations = ({
   };
   const onSelectRecommendedProduct = (item) => {
     if (!isDragging.current) {
-      console.log("loading SKU", item.variations[item.index].code);
+      // console.log("loading SKU", item.variations[item.index].code);
       setTimeout(loadProduct(item.variations[item.index].code), 200);
       setCurrentProduct({ ...item });
     }
